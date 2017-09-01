@@ -18,11 +18,12 @@ public class TSG{
     public static final int SOUTH = 2;
     public static final int WEST = 3;
     public static final String TITLE = "TSG";
-    public static final String VERSION = "v1.0 Alpha";
+    public static final String VERSION = "v2.0 Alpha";
 
     public Item obtainedItem;
     public Weapon obtainedWeapon;
     public Thot thot;
+    public DungeonHandler dungeonHandler;
 
     //Player Variables///////////////
     public int health;
@@ -49,13 +50,6 @@ public class TSG{
     private boolean hasText;
     /////////////////////////////////
 
-    //Rooms//////////////////////////
-    private LinkedList<Room> aRooms;
-    private Room currentRoom;
-    public int roomLimit;
-    public int potentialRooms;
-    /////////////////////////////////
-
     //Lists//////////////////////////
     CommandHandler commandHandler;
     private LinkedList<Item> items;
@@ -70,6 +64,7 @@ public class TSG{
         initCommands();
         initItems();
         initWeapons();
+        initDungeon();
         initGame();
     }
 
@@ -87,6 +82,7 @@ public class TSG{
         commandHandler.add(new CommandGo());
         commandHandler.add(new CommandRoomAction());
         commandHandler.add(new CommandNextLevel());
+        commandHandler.add(new CommandLook());
         if(debug)
         {
             commandHandler.add(new CommandGiveItem());
@@ -114,8 +110,14 @@ public class TSG{
         weapons.add(new WeaponCarbine());
     }
 
+    private void initDungeon()
+    {
+        dungeonHandler = new DungeonHandler();
+    }
+
     public void initGame()
     {
+
         display.requestFocus();
         level = 1;
         xp = 0;
@@ -131,76 +133,9 @@ public class TSG{
         item3 = null;
         obtainedItem = null;
         obtainedWeapon = null;
-        potentialRooms = 1;
-        roomLimit = 99;
         hasText = false;
         thot = null;
-        nextFloor();
-    }
-
-    public LinkedList<Room> createFloor()
-    {
-        LinkedList<Room> r = new LinkedList<>();
-        r.add(new RoomLadder());
-        for(int i=0;i<(roomLimit/4);i++)
-        {
-            r.add(createRoom());
-        }
-        return r;
-    }
-
-    public void nextFloor()
-    {
-
-        if(aRooms==null) {aRooms = new LinkedList<>();}
-        aRooms.clear();
-        for(int i=0;i<(roomLimit/4)*3;i++)
-        {
-            aRooms.add(new RoomEmpty());
-        }
-        aRooms.addAll(createFloor());
-        currentRoom=getFirstRoom();
-        currentRoom.roomEntered(this,null,-1);
-    }
-
-    public Room createRoom()
-    {
-        int i = random.nextInt(3);
-        switch (i)
-        {
-            case 0:
-                System.out.println("TT");
-                return new RoomTrappedTreasure();
-            case 1:
-                System.out.println("HT");
-                return new RoomHiddenTreasure();
-            case 2:
-                System.out.println("T");
-                return new RoomTreasure();
-            default:
-                System.out.println("Invalid Room ID");
-                return null;
-        }
-    }
-
-    public Room getRandomRoom()
-    {
-        Room r = aRooms.get(random.nextInt(aRooms.size()-1));
-        aRooms.remove(r);
-        return r;
-    }
-
-    public Room getFirstRoom()
-    {
-        Room r = aRooms.get(random.nextInt(aRooms.size()-2)+1);
-        aRooms.remove(r);
-        return r;
-    }
-
-    public void enterRoom(Room entered, Room cameFrom, int direction)
-    {
-        currentRoom=entered;
-        currentRoom.roomEntered(this,cameFrom, direction);
+        dungeonHandler.createFloor(this);
     }
 
     public void attackPlayer(int damage)
@@ -360,10 +295,8 @@ public class TSG{
     {
         if(hasText) {
             display.append("\n" + message);
-            display.setScroll();
         }else{
-            display.append(message);
-            display.setScroll();
+            display.append(message);;
             hasText=true;
         }
     }
@@ -392,10 +325,5 @@ public class TSG{
     public LinkedList<Item> getItems()
     {
         return items;
-    }
-
-    public Room getCurrentRoom()
-    {
-        return currentRoom;
     }
 }

@@ -10,7 +10,7 @@ public class CommandRoomAction implements Command {
     public boolean run(String input, TSG tsg) {
         if(input.toLowerCase().contains(command.toLowerCase().trim())&&!tsg.inCombat)
         {
-            tsg.getCurrentRoom().action(tsg);
+            tsg.dungeonHandler.getCurrentRoom().action(tsg);
             return true;
         }else{
             return false;

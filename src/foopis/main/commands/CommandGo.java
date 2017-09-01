@@ -13,16 +13,16 @@ public class CommandGo implements Command
         {
             if(input.toLowerCase().trim().contains("north"))
             {
-                tsg.getCurrentRoom().go(tsg,TSG.NORTH);
+                tsg.dungeonHandler.go(tsg,TSG.NORTH);
             }else if(input.toLowerCase().trim().contains("east"))
             {
-                tsg.getCurrentRoom().go(tsg,TSG.EAST);
+                tsg.dungeonHandler.go(tsg,TSG.EAST);
             }else if(input.toLowerCase().trim().contains("south"))
             {
-                tsg.getCurrentRoom().go(tsg,TSG.SOUTH);
+                tsg.dungeonHandler.go(tsg,TSG.SOUTH);
             }else if(input.toLowerCase().trim().contains("west"))
             {
-                tsg.getCurrentRoom().go(tsg,TSG.WEST);
+                tsg.dungeonHandler.go(tsg,TSG.WEST);
             }else{
                 tsg.appendMessage("You entered a invalid direction ('go [North, East, West, South]");
             }

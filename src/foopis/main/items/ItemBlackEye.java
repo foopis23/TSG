@@ -11,7 +11,7 @@ public class ItemBlackEye implements Item
         {
             tsg.appendMessage("Thot Type: "+tsg.thot.getName()+ " Health: "+tsg.thot.getHealth()+" Damage: "+tsg.thot.getDamage());
         }else{
-            double d = tsg.getCurrentRoom().getEncountChance() * 100;
+            double d = tsg.dungeonHandler.getCurrentRoom().getEncountChance() * 100;
             tsg.appendMessage("The Thot Encounter Chance in this room is "+d+"%");
         }
         return true;

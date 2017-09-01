@@ -64,11 +64,6 @@ public class Display extends JTextArea implements KeyListener
         frame.setVisible(true);
     }
 
-    public void setScroll()
-    {
-        scroll.getVerticalScrollBar().setValue(99999999);
-    }
-
     @Override
     public void keyPressed(KeyEvent e){}
 

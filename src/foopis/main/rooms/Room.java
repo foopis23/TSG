@@ -6,13 +6,33 @@ public interface Room {
 
     void action(TSG tsg);
 
-    void roomEntered(TSG tsg, Room cameFrom, int direction);
-
-    void firstEnter(TSG tsg, Room cameFrom, int direction);
-
-    String getDoors(Room cameFrom);
+    void roomEntered(TSG tsg);
 
     double getEncountChance();
 
-    void go(TSG tsg, int direction);
+    int getX();
+
+    int getY();
+
+    void setX(int x);
+
+    void setY(int y);
+
+    void setNorth(Room r);
+
+    void setSouth(Room r);
+
+    void setEast(Room r);
+
+    void setWest(Room r);
+
+    Room getNorth();
+
+    Room getWest();
+
+    Room getEast();
+
+    Room getSouth();
+
+    public String getName();
 }

@@ -16,12 +16,12 @@ public class CommandHandler extends LinkedList<Command>
 
         if(tsg.obtainedItem!=null)
         {
-            itemScrapping(input,tsg);
+            ran = itemScrapping(input,tsg);
         }else if(tsg.obtainedWeapon!=null)
         {
-            weaponScrapping(input,tsg);
+            ran = weaponScrapping(input,tsg);
         }else{
-            RunCommands(input,tsg);
+            ran = RunCommands(input,tsg);
         }
 
         if(combatMove)

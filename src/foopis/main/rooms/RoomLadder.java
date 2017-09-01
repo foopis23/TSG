@@ -1,177 +1,46 @@
 package foopis.main.rooms;
 
 import foopis.main.TSG;
-import foopis.main.items.Item;
 
 public class RoomLadder implements Room
 {
-    private boolean canNorth;
-    private boolean canSouth;
-    private boolean canEast;
-    private boolean canWest;
     private Room north;
     private Room south;
     private Room east;
     private Room west;
+    private int x;
+    private int y;
     private boolean hasEntered;
     private double thotChance;
 
-    public RoomLadder()
+
+    public RoomLadder ()
     {
-        canNorth = false;
-        canSouth = false;
-        canEast = false;
-        canWest = false;
-        north = null;
-        south = null;
-        east = null;
-        west = null;
-        hasEntered = false;
-        thotChance = .50;
+        north=null;
+        south=null;
+        east=null;
+        west=null;
+        hasEntered=false;
+        thotChance=.20;
     }
 
     @Override
     public void action(TSG tsg)
     {
-        tsg.getRandomIOW();
-        tsg.appendMessage("You have moved to the next floor!");
-        tsg.nextFloor();
+        tsg.appendMessage("You went down the ladder to the next floor");
+        tsg.dungeonHandler.createFloor(tsg);
     }
 
     @Override
-    public void roomEntered(TSG tsg, Room cameFrom, int direction) {
-        String s = "You have entered a Ladder Room. ";
-
-        if (!hasEntered)
+    public void roomEntered(TSG tsg)
+    {
+        if(!hasEntered)
         {
-            firstEnter(tsg, cameFrom, direction);
-            tsg.appendMessage(s+getDoors(cameFrom));
+            hasEntered=true;
             tsg.encounter(thotChance);
         }else{
-            tsg.appendMessage(s+getDoors(cameFrom));
-            tsg.encounter((thotChance/2));
+            tsg.encounter(thotChance/2);
         }
-    }
-
-    @Override
-    public void firstEnter(TSG tsg, Room cameFrom, int direction)
-    {
-        if(cameFrom!=null)
-        {
-            if(direction==TSG.WEST)
-            {
-                east = cameFrom;
-            }else if(direction==TSG.EAST)
-            {
-                west = cameFrom;
-            }else if(direction==TSG.SOUTH)
-            {
-                north = cameFrom;
-            }else if(direction==TSG.NORTH)
-            {
-                south = cameFrom;
-            }
-        }
-
-        if(east==null)
-        {
-            int i = tsg.random.nextInt((tsg.roomLimit-1));
-            if(i<tsg.roomLimit-tsg.potentialRooms)
-            {
-                canEast=true;
-                tsg.potentialRooms++;
-            }
-        }else{
-            canEast = true;
-        }
-
-        if(west==null)
-        {
-            int i = tsg.random.nextInt((tsg.roomLimit-1));
-            if(i<tsg.roomLimit-tsg.potentialRooms)
-            {
-                canWest=true;
-                tsg.potentialRooms++;
-            }
-        }else{
-            canWest = true;
-        }
-
-        if(north==null)
-        {
-            int i = tsg.random.nextInt((tsg.roomLimit-1));
-            if(i<tsg.roomLimit-tsg.potentialRooms)
-            {
-                canNorth=true;
-                tsg.potentialRooms++;
-            }
-        }else{
-            canNorth=true;
-        }
-
-        if(south==null)
-        {
-            int i = tsg.random.nextInt((tsg.roomLimit-1));
-            if(i<tsg.roomLimit-tsg.potentialRooms)
-            {
-                canSouth=true;
-                tsg.potentialRooms++;
-            }
-        }else{
-            canSouth=true;
-        }
-        hasEntered = true;
-    }
-
-    public String getDoors(Room cameFrom)
-    {
-        String s = "There are open doors to the ";
-
-        if(canWest)
-        {
-            s+= "West";
-            if(cameFrom==west&&west!=null)
-            {
-                s+="(Entered From), ";
-            }else{
-                s+=", ";
-            }
-        }
-
-        if(canEast)
-        {
-            s+= "East";
-            if(cameFrom==east&&east!=null)
-            {
-                s+="(Entered From), ";
-            }else{
-                s+=", ";
-            }
-        }
-
-        if(canNorth)
-        {
-            s+= "North";
-            if(cameFrom==north&&north!=null)
-            {
-                s+="(Entered From), ";
-            }else{
-                s+=", ";
-            }
-        }
-
-        if(canSouth)
-        {
-            s+= "South";
-            if(cameFrom==south&&south!=null)
-            {
-                s+="(Entered From), ";
-            }else{
-                s+=", ";
-            }
-        }
-
-        return s;
     }
 
     @Override
@@ -180,26 +49,69 @@ public class RoomLadder implements Room
     }
 
     @Override
-    public void go(TSG tsg, int direction)
-    {
-        if(direction==TSG.NORTH&&canNorth)
-        {
-            if(north==null) {north = tsg.getRandomRoom();}
-            tsg.enterRoom(north,this, direction);
-        }else if(direction==TSG.EAST&&canEast)
-        {
-            if(east==null) {east = tsg.getRandomRoom();}
-            tsg.enterRoom(east,this, direction);
-        }else if(direction==TSG.SOUTH&&canSouth)
-        {
-            if(south==null) {south = tsg.getRandomRoom();}
-            tsg.enterRoom(south,this, direction);
-        }else if(direction==TSG.WEST&&canWest)
-        {
-            if(west==null) {west = tsg.getRandomRoom();}
-            tsg.enterRoom(west,this, direction);
-        }else{
-            tsg.appendMessage("You can not go that way! (OOF)");
-        }
+    public int getX() {
+        return x;
     }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public void setX(int x) {
+        this.x=x;
+    }
+
+    @Override
+    public void setY(int y) {
+        this.y=y;
+    }
+
+    @Override
+    public void setNorth(Room r) {
+        north=r;
+    }
+
+    @Override
+    public void setSouth(Room r) {
+        south=r;
+    }
+
+    @Override
+    public void setEast(Room r) {
+        east=r;
+    }
+
+    @Override
+    public void setWest(Room r)
+    {
+        west = r;
+    }
+
+    @Override
+    public Room getNorth() {
+        return north;
+    }
+
+    @Override
+    public Room getWest() {
+        return west;
+    }
+
+    @Override
+    public Room getEast() {
+        return east;
+    }
+
+    @Override
+    public Room getSouth() {
+        return south;
+    }
+
+    @Override
+    public String getName() {
+        return "Ladder Room";
+    }
+
 }
