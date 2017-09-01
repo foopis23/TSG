@@ -14,6 +14,40 @@ public class CommandHandler extends LinkedList<Command>
         ran = false;
         combatMove = false;
 
+        if(tsg.obtainedItem!=null)
+        {
+            itemScrapping(input,tsg);
+        }else if(tsg.obtainedWeapon!=null)
+        {
+            weaponScrapping(input,tsg);
+        }else{
+            RunCommands(input,tsg);
+        }
+
+        if(combatMove)
+        {
+            if(tsg.inCombat)
+            {
+                if(tsg.thot!=null)
+                {
+                    tsg.thot.action(tsg);
+                }else{
+                    tsg.appendMessage("Combat Machin brok");
+                }
+            }
+        }
+
+        if (!ran) {
+            tsg.appendMessage("Unknown Command");
+        }
+
+        if(tsg.health<=0)
+        {
+            tsg.appendMessage("GameOver! You died at level "+tsg.level);
+            tsg.appendMessage("Starting New Game!");
+            tsg.initGame();
+        }
+
     }
 
     public boolean RunCommands(String input, TSG tsg)
@@ -25,6 +59,26 @@ public class CommandHandler extends LinkedList<Command>
             }
         }
         return false;
+    }
+
+    public boolean weaponScrapping(String input, TSG tsg)
+    {
+        if(input.toLowerCase().contains("yes"))
+        {
+            tsg.appendMessage("You replaced "+tsg.weapon.getName()+" with "+ tsg.obtainedWeapon.getName());
+            tsg.weapon = tsg.obtainedWeapon;
+            tsg.obtainedWeapon = null;
+            return true;
+        }else if(input.toLowerCase().contains("no"))
+        {
+            tsg.appendMessage("You scraped "+ tsg.obtainedWeapon.getName());
+            tsg.obtainedWeapon=null;
+            return true;
+        }else{
+            tsg.appendMessage("That is not a valid command right now!");
+            tsg.appendMessage("You already have a weapon, if you would like to replace it enter yes, if not no");
+            return true;
+        }
     }
 
 

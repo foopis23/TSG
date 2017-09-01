@@ -57,7 +57,7 @@ public class TSG{
     /////////////////////////////////
 
     //Lists//////////////////////////
-    private LinkedList<Command> commands;
+    CommandHandler commandHandler;
     private LinkedList<Item> items;
     private LinkedList<Weapon> weapons;
     /////////////////////////////////
@@ -75,21 +75,21 @@ public class TSG{
 
     private void initCommands()
     {
-        commands = new LinkedList<>();
+        commandHandler = new CommandHandler();
 
-        commands.add(new CommandHelp());
-        commands.add(new CommandClear());
-        commands.add(new CommandHealth());
-        commands.add(new CommandComicSans());
-        commands.add(new CommandUseItem());
-        commands.add(new CommandItems());
-        commands.add(new CommandAttack());
-        commands.add(new CommandGo());
-        commands.add(new CommandRoomAction());
-        commands.add(new CommandNextLevel());
+        commandHandler.add(new CommandHelp());
+        commandHandler.add(new CommandClear());
+        commandHandler.add(new CommandHealth());
+        commandHandler.add(new CommandComicSans());
+        commandHandler.add(new CommandUseItem());
+        commandHandler.add(new CommandItems());
+        commandHandler.add(new CommandAttack());
+        commandHandler.add(new CommandGo());
+        commandHandler.add(new CommandRoomAction());
+        commandHandler.add(new CommandNextLevel());
         if(debug)
         {
-            commands.add(new CommandGiveItem());
+            commandHandler.add(new CommandGiveItem());
         }
     }
 
@@ -114,7 +114,7 @@ public class TSG{
         weapons.add(new WeaponCarbine());
     }
 
-    private void initGame()
+    public void initGame()
     {
         display.requestFocus();
         level = 1;
@@ -339,86 +339,20 @@ public class TSG{
         }
     }
 
+    public void gameOver()
+    {
+        appendMessage("GameOver! You died at level "+level);
+        appendMessage("Starting New Game!");
+        initGame();
+    }
+
     void runAction(String input)
     {
-        boolean ran = false;
-        boolean combatMove = false;
-
-        if(obtainedItem!=null) {
-            if (input.toLowerCase().contains("no")) {
-                obtainedItem = null;
-                appendMessage("You scraped the Item");
-                ran = true;
-            } else if (input.toLowerCase().contains("1")) {
-                appendMessage(item1.getName() + " has been scraped for " + obtainedItem.getName());
-                item1 = obtainedItem;
-                obtainedItem = null;
-                ran = true;
-            } else if (input.toLowerCase().contains("2")) {
-                appendMessage(item2.getName() + " has been scraped for " + obtainedItem.getName());
-                item2 = obtainedItem;
-                obtainedItem = null;
-                ran = true;
-            } else if (input.toLowerCase().contains("3")) {
-                appendMessage(item3.getName() + " has been scraped for " + obtainedItem.getName());
-                item3 = obtainedItem;
-                obtainedItem = null;
-                ran = true;
-            } else {
-                ran = true;
-                appendMessage("That is not a valid command right now!");
-                appendMessage("Your Inventory is full, if you want to replace an Item type the # now, if not type no");
-            }
-        }else if(obtainedWeapon!=null)
-        {
-            if(input.toLowerCase().contains("yes"))
-            {
-                appendMessage("You replaced "+weapon.getName()+" with "+ obtainedWeapon.getName());
-                weapon = obtainedWeapon;
-                obtainedWeapon = null;
-                ran = true;
-            }else if(input.toLowerCase().contains("no"))
-            {
-                appendMessage("You scraped "+ obtainedWeapon.getName());
-                obtainedWeapon=null;
-                ran = true;
-            }else{
-                appendMessage("That is not a valid command right now!");
-                appendMessage("You already have a weapon, if you would like to replace it enter yes, if not no");
-                ran = true;
-            }
-        }else {
-            for (Command c : commands) {
-                if (c.run(input, this)) {
-                    ran = true;
-                    combatMove=c.isAttackMove();
-                    break;
-                }
-            }
-        }
-
-        if(combatMove)
-        {
-            if(inCombat)
-            {
-                if(thot!=null)
-                {
-                    thot.action(this);
-                }else{
-                    appendMessage("Combat Machin brok");
-                }
-            }
-        }
-
-        if (!ran) {
-            appendMessage("Unknown Command");
-        }
+        commandHandler.RunAction(input,this);
 
         if(health<=0)
         {
-            appendMessage("GameOver! You died at level "+level);
-            appendMessage("Starting New Game!");
-            initGame();
+            gameOver();
         }
     }
 
@@ -452,7 +386,7 @@ public class TSG{
 
     public LinkedList<Command> getCommands()
     {
-        return commands;
+        return commandHandler;
     }
 
     public LinkedList<Item> getItems()
