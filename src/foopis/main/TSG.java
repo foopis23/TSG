@@ -74,15 +74,14 @@ public class TSG{
 
         commandHandler.add(new CommandHelp());
         commandHandler.add(new CommandClear());
-        commandHandler.add(new CommandHealth());
         commandHandler.add(new CommandComicSans());
         commandHandler.add(new CommandUseItem());
         commandHandler.add(new CommandItems());
         commandHandler.add(new CommandAttack());
         commandHandler.add(new CommandGo());
         commandHandler.add(new CommandRoomAction());
-        commandHandler.add(new CommandNextLevel());
         commandHandler.add(new CommandLook());
+        commandHandler.add(new CommandStats());
         if(debug)
         {
             commandHandler.add(new CommandGiveItem());
@@ -165,12 +164,28 @@ public class TSG{
 
     public void encounter(double chance)
     {
-        int sampleSize = 1000;
-        if(random.nextInt(sampleSize-1)<=(sampleSize*chance))
+        //int sampleSize = 1000;
+        //if(random.nextInt(sampleSize-1)<=(sampleSize*chance))
+        //{
+            //thot = new Thot(level);
+            //inCombat = true;
+            //appendMessage("You have been encountered by "+thot.getName());
+        //}
+    }
+
+    public void levelUp()
+    {
+        appendMessage("LEVEL UP!");
+        appendMessage("Level: "+this.level+" -+1--> "+(this.level+1));
+        level++;
+        this.xp -= xpToLevel;
+        xpToLevel+=50;
+        healthLimit+=10;
+        health+=10;
+
+        if(health>healthLimit)
         {
-            thot = new Thot(level);
-            inCombat = true;
-            appendMessage("You have been encountered by "+thot.getName());
+            health=health-(health-healthLimit);
         }
     }
 
@@ -185,11 +200,7 @@ public class TSG{
         {
             if(level<10)
             {
-                appendMessage("LEVEL UP!");
-                appendMessage("Level: "+this.level+" -+1--> "+(this.level+1));
-                level++;
-                this.xp -= xpToLevel;
-                xpToLevel+=50;
+                levelUp();
             }
         }
         thot = null;

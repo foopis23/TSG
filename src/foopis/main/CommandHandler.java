@@ -71,7 +71,7 @@ public class CommandHandler extends LinkedList<Command>
             return true;
         }else if(input.toLowerCase().contains("no"))
         {
-            tsg.appendMessage("You scraped "+ tsg.obtainedWeapon.getName());
+            tsg.appendMessage("You scrapped "+ tsg.obtainedWeapon.getName());
             tsg.obtainedWeapon=null;
             return true;
         }else{
@@ -86,20 +86,20 @@ public class CommandHandler extends LinkedList<Command>
     {
         if (input.toLowerCase().contains("no")) {
             tsg.obtainedItem = null;
-            tsg.appendMessage("You scraped the Item");
+            tsg.appendMessage("You scrapped the Item");
             return true;
         } else if (input.toLowerCase().contains("1")) {
-            tsg.appendMessage(tsg.item1.getName() + " has been scraped for " + tsg.obtainedItem.getName());
+            tsg.appendMessage(tsg.item1.getName() + " has been scrapped for " + tsg.obtainedItem.getName());
             tsg.item1 = tsg.obtainedItem;
             tsg.obtainedItem = null;
             return true;
         } else if (input.toLowerCase().contains("2")) {
-            tsg.appendMessage(tsg.item2.getName() + " has been scraped for " + tsg.obtainedItem.getName());
+            tsg.appendMessage(tsg.item2.getName() + " has been scrapped for " + tsg.obtainedItem.getName());
             tsg.item2 = tsg.obtainedItem;
             tsg.obtainedItem = null;
             return true;
         } else if (input.toLowerCase().contains("3")) {
-            tsg.appendMessage(tsg.item3.getName() + " has been scraped for " + tsg.obtainedItem.getName());
+            tsg.appendMessage(tsg.item3.getName() + " has been scrapped for " + tsg.obtainedItem.getName());
             tsg.item3 = tsg.obtainedItem;
             tsg.obtainedItem = null;
             return true;

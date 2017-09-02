@@ -12,6 +12,7 @@ public class RoomTrappedTreasure implements Room
     private int y;
     private boolean hasEntered;
     private double thotChance;
+    private boolean tricked;
     private boolean treasureOpenned;
 
 
@@ -29,12 +30,18 @@ public class RoomTrappedTreasure implements Room
     @Override
     public void action(TSG tsg)
     {
-        if(!treasureOpenned)
+        if(!tricked)
         {
             tsg.appendMessage("The Treasure was a Trap!");
             tsg.encounter(1);
-            treasureOpenned=true;
+            treasureOpenned=false;
         }else{
+            if(!treasureOpenned)
+            {
+                tsg.appendMessage("You opened the Treasure Chest!");
+                tsg.getRandomIOW();
+                treasureOpenned=true;
+            }
             tsg.appendMessage("You have already been tricked");
         }
     }

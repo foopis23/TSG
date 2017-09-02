@@ -8,7 +8,7 @@ import java.util.Random;
 public class DungeonHandler
 {
     private int roomLimit = 50;
-    private double specialRoomAmount = .25;
+    private double specialRoomAmount = .5;
     private Random random;
     private LinkedList<Room> aRooms;
     private LinkedList<Room> tRooms;
@@ -132,7 +132,7 @@ public class DungeonHandler
         tsg.appendMessage(text);
     }
 
-    public void displayRoomInfo(TSG tsg)
+    public void displayRoomInfo(TSG tsg, Room cameFrom)
     {
         tsg.appendMessage("You have entered a "+currentRoom.getName());
         Room n = currentRoom.getNorth();
@@ -144,22 +144,46 @@ public class DungeonHandler
 
         if(n!=null)
         {
-            text+="North ";
+            text+="North";
+            if(n==cameFrom)
+            {
+                text+=" (Entered From), ";
+            }else{
+                text+=", ";
+            }
         }
 
         if(s!=null)
         {
-            text+="South ";
+            text+="South";
+            if(s==cameFrom)
+            {
+                text+=" (Entered From), ";
+            }else{
+                text+=", ";
+            }
         }
 
         if(e!=null)
         {
-            text+="East ";
+            text+="East";
+            if(e==cameFrom)
+            {
+                text+=" (Entered From), ";
+            }else{
+                text+=", ";
+            }
         }
 
         if(w!=null)
         {
-            text+="West ";
+            text+="West";
+            if(w==cameFrom)
+            {
+                text+=" (Entered From), ";
+            }else{
+                text+=", ";
+            }
         }
 
         tsg.appendMessage(text);
@@ -167,14 +191,15 @@ public class DungeonHandler
 
     public int getPotentialRooms()
     {
-        return aRooms.size();
+        return tRooms.size();
     }
 
 
     public void enterRoom(Room r,TSG tsg)
     {
+        Room oldRoom = currentRoom;
         currentRoom = r;
-        displayRoomInfo(tsg);
+        displayRoomInfo(tsg,oldRoom);
         currentRoom.roomEntered(tsg);
     }
 
@@ -220,6 +245,7 @@ public class DungeonHandler
             case 1:
                 return new RoomHiddenTreasure();
             case 2:
+                System.out.println("oof");
                 return new RoomTreasure();
             default:
                 System.out.println("Invalid Room ID");
@@ -239,6 +265,7 @@ public class DungeonHandler
         {
             if(aRooms.size()>1) {
                 int i = random.nextInt(roomLimit - 1);
+                System.out.println(roomLimit - getPotentialRooms());
                 if (i < roomLimit - getPotentialRooms()) {
                     Room g = aRooms.get(random.nextInt(aRooms.size() - 1));
                     aRooms.remove(g);

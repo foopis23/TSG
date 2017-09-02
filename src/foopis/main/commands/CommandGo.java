@@ -11,16 +11,16 @@ public class CommandGo implements Command
     {
         if(input.toLowerCase().contains(command.trim().toLowerCase())&&!tsg.inCombat)
         {
-            if(input.toLowerCase().trim().contains("north"))
+            if(input.toLowerCase().trim().contains("north")||input.toLowerCase().trim().contains("n"))
             {
                 tsg.dungeonHandler.go(tsg,TSG.NORTH);
-            }else if(input.toLowerCase().trim().contains("east"))
+            }else if(input.toLowerCase().trim().contains("east")||input.toLowerCase().trim().contains("e"))
             {
                 tsg.dungeonHandler.go(tsg,TSG.EAST);
-            }else if(input.toLowerCase().trim().contains("south"))
+            }else if(input.toLowerCase().trim().contains("south")||input.toLowerCase().trim().contains("s"))
             {
                 tsg.dungeonHandler.go(tsg,TSG.SOUTH);
-            }else if(input.toLowerCase().trim().contains("west"))
+            }else if(input.toLowerCase().trim().contains("west")||input.toLowerCase().trim().contains("w"))
             {
                 tsg.dungeonHandler.go(tsg,TSG.WEST);
             }else{
