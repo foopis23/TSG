@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 
 public class Display extends JTextArea implements KeyListener
 {
+    private JFrame frame;
     private JPanel panel;
     private JTextField inputField;
     private JScrollPane scroll;
@@ -55,13 +56,20 @@ public class Display extends JTextArea implements KeyListener
 
     private void initFrame()
     {
-        JFrame frame = new JFrame(TSG.TITLE+" "+TSG.VERSION);
+        frame = new JFrame(TSG.TITLE+" "+TSG.VERSION);
         frame.setSize(700,400);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.add(panel);
         frame.setVisible(true);
+    }
+
+    public void changeFont(Font f)
+    {
+        frame.setFont(f);
+        this.setFont(f);
+        inputField.setFont(f);
     }
 
     @Override

@@ -34,15 +34,16 @@ public class RoomTrappedTreasure implements Room
         {
             tsg.appendMessage("The Treasure was a Trap!");
             tsg.encounter(1);
-            treasureOpenned=false;
+            tricked=true;
         }else{
             if(!treasureOpenned)
             {
                 tsg.appendMessage("You opened the Treasure Chest!");
                 tsg.getRandomIOW();
                 treasureOpenned=true;
+            }else{
+                tsg.appendMessage("You have already been tricked");
             }
-            tsg.appendMessage("You have already been tricked");
         }
     }
 

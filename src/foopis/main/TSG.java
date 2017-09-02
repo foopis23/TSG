@@ -4,12 +4,9 @@ import foopis.main.commands.*;
 import foopis.main.enemies.Thot;
 import foopis.main.items.*;
 import foopis.main.items.weapons.*;
-import foopis.main.rooms.*;
-import sun.awt.image.ImageWatched;
 
 import java.awt.*;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public class TSG{
@@ -76,7 +73,7 @@ public class TSG{
         commandHandler.add(new CommandClear());
         commandHandler.add(new CommandComicSans());
         commandHandler.add(new CommandUseItem());
-        commandHandler.add(new CommandItems());
+        commandHandler.add(new CommandInventory());
         commandHandler.add(new CommandAttack());
         commandHandler.add(new CommandGo());
         commandHandler.add(new CommandRoomAction());
@@ -118,6 +115,7 @@ public class TSG{
     {
 
         display.requestFocus();
+        changeFont("Georgia",Font.TRUETYPE_FONT,12);
         level = 1;
         xp = 0;
         xpToLevel = 100;
@@ -139,7 +137,8 @@ public class TSG{
 
     public void attackPlayer(int damage)
     {
-        health-=damage;
+        health-=(damage-defenseBoost);
+        System.out.println(health);
     }
 
     public void attack(Weapon w)
@@ -164,13 +163,13 @@ public class TSG{
 
     public void encounter(double chance)
     {
-        //int sampleSize = 1000;
-        //if(random.nextInt(sampleSize-1)<=(sampleSize*chance))
-        //{
-            //thot = new Thot(level);
-            //inCombat = true;
-            //appendMessage("You have been encountered by "+thot.getName());
-        //}
+        int sampleSize = 1000;
+        if(random.nextInt(sampleSize-1)<=(sampleSize*chance))
+        {
+            thot = new Thot(level);
+            inCombat = true;
+            appendMessage("You have been encountered by "+thot.getName());
+        }
     }
 
     public void levelUp()
@@ -258,7 +257,10 @@ public class TSG{
             item3=item;
             obtainedItem=null;
         }else{
-            appendMessage(getInventory());
+            String s=getInventory();
+            appendMessage("---------------Inventory---------------");
+            appendMessage(s);
+            appendMessage("------------------------------------------");
             appendMessage("Your Inventory is full, if you want to replace an Item enter the #(1-3) now, if not enter no");
 ;
         }
@@ -272,7 +274,10 @@ public class TSG{
             appendMessage("You have obtained "+w.getName());
             if(weapon!=null)
             {
-                appendMessage(getInventory());
+                String s=getInventory();
+                appendMessage("---------------Inventory---------------");
+                appendMessage(s);
+                appendMessage("------------------------------------------");
                 appendMessage("You already have a weapon, if you would like to replace it enter yes, if not no");
             }else{
                 weapon = w;
@@ -320,7 +325,7 @@ public class TSG{
 
     public void changeFont(String font, int type, int size)
     {
-        display.setFont(new Font(font, type, size));
+        display.changeFont(new Font(font, type, size));
     }
 
     public static void main(String[] args)

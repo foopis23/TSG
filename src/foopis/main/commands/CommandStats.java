@@ -14,7 +14,7 @@ public class CommandStats implements Command
             tsg.appendMessage("----------Stats----------");
             tsg.appendMessage("Level: "+tsg.level);
             tsg.appendMessage("Xp: "+tsg.xp+"/"+tsg.xpToLevel);
-            tsg.appendMessage("Health: "+tsg.healthLimit+"/"+tsg.healthLimit);
+            tsg.appendMessage("Health: "+tsg.health+"/"+tsg.healthLimit);
             tsg.appendMessage("Damage Boost: "+tsg.damageBoost);
             tsg.appendMessage("Defense Boost: "+tsg.defenseBoost);
             tsg.appendMessage("-------------------------");

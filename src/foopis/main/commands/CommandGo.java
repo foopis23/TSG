@@ -11,16 +11,16 @@ public class CommandGo implements Command
     {
         if(input.toLowerCase().contains(command.trim().toLowerCase())&&!tsg.inCombat)
         {
-            if(input.toLowerCase().trim().contains("north")||input.toLowerCase().trim().contains("n"))
+            if(input.toLowerCase().trim().contains("north")||input.toLowerCase().trim().contains("no"))
             {
                 tsg.dungeonHandler.go(tsg,TSG.NORTH);
-            }else if(input.toLowerCase().trim().contains("east")||input.toLowerCase().trim().contains("e"))
+            }else if(input.toLowerCase().trim().contains("east")||input.toLowerCase().trim().contains("ea"))
             {
                 tsg.dungeonHandler.go(tsg,TSG.EAST);
-            }else if(input.toLowerCase().trim().contains("south")||input.toLowerCase().trim().contains("s"))
+            }else if(input.toLowerCase().trim().contains("south")||input.toLowerCase().trim().contains("so"))
             {
                 tsg.dungeonHandler.go(tsg,TSG.SOUTH);
-            }else if(input.toLowerCase().trim().contains("west")||input.toLowerCase().trim().contains("w"))
+            }else if(input.toLowerCase().trim().contains("west")||input.toLowerCase().trim().contains("we"))
             {
                 tsg.dungeonHandler.go(tsg,TSG.WEST);
             }else{

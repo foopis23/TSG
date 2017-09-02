@@ -135,54 +135,62 @@ public class DungeonHandler
     public void displayRoomInfo(TSG tsg, Room cameFrom)
     {
         tsg.appendMessage("You have entered a "+currentRoom.getName());
-        Room n = currentRoom.getNorth();
-        Room s = currentRoom.getSouth();
-        Room e = currentRoom.getEast();
-        Room w = currentRoom.getWest();
+        Room n = findRoom(currentRoom.getX(),currentRoom.getY()+1);
+        Room s = findRoom(currentRoom.getX(),currentRoom.getY()-1);
+        Room e = findRoom(currentRoom.getX()+1,currentRoom.getY());
+        Room w = findRoom(currentRoom.getX()-1,currentRoom.getY());
 
         String text = "There are door(s) to the ";
 
+        boolean textAdded = false;
         if(n!=null)
         {
             text+="North";
+            textAdded = true;
             if(n==cameFrom)
             {
-                text+=" (Entered From), ";
-            }else{
-                text+=", ";
+                text+=" (Entered From)";
             }
         }
 
         if(s!=null)
         {
+            if(textAdded)
+            {
+                text+=", ";
+            }
+            textAdded=true;
             text+="South";
             if(s==cameFrom)
             {
-                text+=" (Entered From), ";
-            }else{
-                text+=", ";
+                text+=" (Entered From)";
             }
         }
 
         if(e!=null)
         {
+            if(textAdded)
+            {
+                text+=", ";
+            }
+            textAdded=true;
             text+="East";
             if(e==cameFrom)
             {
-                text+=" (Entered From), ";
-            }else{
-                text+=", ";
+                text+=" (Entered From)";
             }
         }
 
         if(w!=null)
         {
+            if(textAdded)
+            {
+                text+=", ";
+            }
             text+="West";
             if(w==cameFrom)
             {
-                text+=" (Entered From), ";
-            }else{
-                text+=", ";
+                text+=" (Entered From)";
             }
         }
 
