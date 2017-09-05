@@ -2,28 +2,20 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
-public class CommandRoomAction implements Command {
+public class CommandRoomAction extends Command {
 
-    String command = "RoomAction";
+    public CommandRoomAction()
+    {
+        command="RoomAction";
+        isAttackMove = false;
+    }
 
-    @Override
     public boolean run(String input, TSG tsg) {
-        if(input.toLowerCase().contains(command.toLowerCase().trim())&&!tsg.inCombat)
-        {
+        if (input.toLowerCase().contains(command.toLowerCase().trim()) && !tsg.inCombat) {
             tsg.dungeonHandler.getCurrentRoom().action(tsg);
             return true;
-        }else{
+        } else {
             return false;
         }
-    }
-
-    @Override
-    public String getCommand() {
-        return command;
-    }
-
-    @Override
-    public boolean isAttackMove() {
-        return false;
     }
 }

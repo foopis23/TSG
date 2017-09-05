@@ -3,11 +3,14 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
-public class CommandUseItem implements Command
+public class CommandUseItem extends Command
 {
-    private String command = "UseItem";
+    public CommandUseItem()
+    {
+        command = "UseItem";
+        isAttackMove = true;
+    }
 
-    @Override
     public boolean run(String input, TSG tsg) {
         if(input.toLowerCase().contains(command.trim().toLowerCase()))
         {
@@ -47,16 +50,5 @@ public class CommandUseItem implements Command
 
             return true;
         }else return false;
-    }
-
-    @Override
-    public String getCommand() {
-        return command;
-    }
-
-    @Override
-    public boolean isAttackMove()
-    {
-        return true;
     }
 }

@@ -2,11 +2,15 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
-public class CommandInventory implements Command
+public class CommandInventory extends Command
 {
-   private  String command = "Inventory";
 
-    @Override
+    public CommandInventory()
+    {
+        command = "Inventory";
+        isAttackMove = false;
+    }
+
     public boolean run(String input, TSG tsg)
     {
         if(input.toLowerCase().contains(command.toLowerCase().trim()))
@@ -17,16 +21,5 @@ public class CommandInventory implements Command
             tsg.appendMessage("------------------------------------------");
             return true;
         }else return false;
-    }
-
-    @Override
-    public String getCommand()
-    {
-        return command;
-    }
-
-    @Override
-    public boolean isAttackMove() {
-        return false;
     }
 }
