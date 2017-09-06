@@ -20,7 +20,6 @@ public class WeaponCarbine extends Weapon
         }else{
             tsg.appendMessage("You don't spawn peek the "+tsg.thot.getName());
         }
-        tsg.attack(this);
         uses--;
         if(uses<=0)
         {

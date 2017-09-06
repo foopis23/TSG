@@ -12,13 +12,7 @@ public class CommandStats extends Command {
 
     public boolean run(String input, TSG tsg) {
         if (input.toLowerCase().contains(command.trim().toLowerCase())) {
-            tsg.appendMessage("----------Stats----------");
-            tsg.appendMessage("Level: " + tsg.level);
-            tsg.appendMessage("Xp: " + tsg.xp + "/" + tsg.xpToLevel);
-            tsg.appendMessage("Health: " + tsg.health + "/" + tsg.healthLimit);
-            tsg.appendMessage("Damage Boost: " + tsg.damageBoost);
-            tsg.appendMessage("Defense Boost: " + tsg.defenseBoost);
-            tsg.appendMessage("-------------------------");
+            System.out.println(tsg.player.getStats());
             return true;
         }
         return false;

@@ -19,7 +19,7 @@ public class CommandGiveItem extends Command
                 System.out.println(s);
                 int i = Integer.parseInt(s);
                 if(i<tsg.getItems().size()) {
-                    tsg.obtainItem(tsg.getItems().get(i));
+                    tsg.player.obtainItem(tsg.getItems().get(i), tsg);
                     return true;
                 }else {
                     tsg.appendMessage("Could not find Item ID");
