@@ -2,10 +2,13 @@ package foopis.main.items;
 
 import foopis.main.TSG;
 
-public class ItemAshScroll implements Item
+public class ItemAshScroll extends Item
 {
+    public ItemAshScroll()
+    {
+        name = "Ash's Scroll";
+    }
 
-    @Override
     public boolean use(TSG tsg)
     {
         if(tsg.inCombat)
@@ -18,10 +21,5 @@ public class ItemAshScroll implements Item
             tsg.appendMessage("You can only use this item in combat");
             return false;
         }
-    }
-
-    @Override
-    public String getName() {
-        return "Ash's Scroll";
     }
 }

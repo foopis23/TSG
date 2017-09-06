@@ -2,10 +2,14 @@ package foopis.main.items;
 
 import foopis.main.TSG;
 
-public class ItemBlackEye implements Item
+public class ItemBlackEye extends Item
 {
 
-    @Override
+    public ItemBlackEye()
+    {
+        name="Black Eye";
+    }
+
     public boolean use(TSG tsg) {
         if(tsg.inCombat)
         {
@@ -15,10 +19,5 @@ public class ItemBlackEye implements Item
             tsg.appendMessage("The Thot Encounter Chance in this room is "+d+"%");
         }
         return true;
-    }
-
-    @Override
-    public String getName() {
-        return "Black Eye";
     }
 }

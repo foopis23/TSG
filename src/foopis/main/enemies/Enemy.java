@@ -2,12 +2,41 @@ package foopis.main.enemies;
 
 import foopis.main.TSG;
 
-public interface Enemy
+public class Enemy
 {
-    void action(TSG tsg);
-    void takeDamage(int damage);
-    void setHitChance(double i);
-    int getHealth();
-    int getDamage();
-    String getName();
+    protected int health;
+    protected int damage;
+    protected String name;
+    protected double hitChance;
+    protected int xpDropped;
+
+    public void action(TSG tsg)
+    {
+        tsg.appendMessage("This is a default Action for thots");
+    }
+
+    public void takeDamage(int damage)
+    {
+        health -= damage;
+    }
+
+    public void setHitChance(double i)
+    {
+        hitChance = i;
+    }
+
+    public int getHealth()
+    {
+        return health;
+    }
+
+    public int getDamage()
+    {
+        return damage;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
 }

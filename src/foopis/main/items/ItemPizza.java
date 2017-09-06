@@ -2,15 +2,18 @@ package foopis.main.items;
 
 import foopis.main.TSG;
 
-public class ItemPizza implements Item {
+public class ItemPizza extends Item {
 
-    private double chanceOfBoneless = .8;
-    private double healthBoost = 20;
+    public ItemPizza()
+    {
+        name = "Pizza";
+    }
 
-    @Override
     public boolean use(TSG tsg)
     {
         int i = tsg.random.nextInt(100);
+        double chanceOfBoneless = .8;
+        double healthBoost = 20;
         if(i<100*chanceOfBoneless)
         {
             int oldHealth = tsg.health;
@@ -32,10 +35,5 @@ public class ItemPizza implements Item {
             tsg.appendMessage("Health: "+oldHealth+" --"+healthBoost/2+ "-> "+tsg.health);
         }
         return true;
-    }
-
-    @Override
-    public String getName() {
-        return "Pizza";
     }
 }

@@ -166,7 +166,7 @@ public class TSG{
         int sampleSize = 1000;
         if(random.nextInt(sampleSize-1)<=(sampleSize*chance))
         {
-            thot = new Thot(level);
+            thot = new Thot(level, this);
             inCombat = true;
             appendMessage("You have been encountered by "+thot.getName());
         }

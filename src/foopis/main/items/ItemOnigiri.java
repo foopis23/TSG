@@ -2,10 +2,13 @@ package foopis.main.items;
 
 import foopis.main.TSG;
 
-public class ItemOnigiri implements Item
+public class ItemOnigiri extends Item
 {
+    public ItemOnigiri()
+    {
+        name = "Onigiri";
+    }
 
-    @Override
     public boolean use(TSG tsg)
     {
         int healthBoost = 25;
@@ -19,11 +22,5 @@ public class ItemOnigiri implements Item
         tsg.appendMessage("You now have the power of god and anime on your side!");
         tsg.appendMessage("Health: "+oldHealth+" -+"+healthBoost+ "-> "+tsg.health);
         return true;
-    }
-
-    @Override
-    public String getName()
-    {
-        return "Onigiri";
     }
 }

@@ -2,10 +2,14 @@ package foopis.main.items;
 
 import foopis.main.TSG;
 
-public class ItemDankMeme implements Item
+public class ItemDankMeme extends Item
 {
 
-    @Override
+    public ItemDankMeme()
+    {
+        name = "Dank Meme";
+    }
+
     public boolean use(TSG tsg)
     {
         int healthDrop = 10;
@@ -21,11 +25,5 @@ public class ItemDankMeme implements Item
             tsg.health = tsg.health - (tsg.health-tsg.healthLimit);
         }
         return true;
-    }
-
-    @Override
-    public String getName()
-    {
-        return "Dank Meme";
     }
 }
