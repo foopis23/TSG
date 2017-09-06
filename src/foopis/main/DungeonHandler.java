@@ -102,33 +102,54 @@ public class DungeonHandler
     public void look(TSG tsg)
     {
         tsg.appendMessage("You are in a "+currentRoom.getName());
-        Room n = currentRoom.getNorth();
-        Room s = currentRoom.getSouth();
-        Room e = currentRoom.getEast();
-        Room w = currentRoom.getWest();
 
         String text = "There are doors to the ";
 
-        if(n!=null)
+        int numExits = 0;
+        String[] directions = {"North", "East", "South", "West"};
+        boolean[] exits = {false, false, false, false};
+        for(int i = 0; i < 4; i++)
         {
-            text+="North ";
+            if(currentRoom.getRoom(i) != null)
+            {
+                exits[i] = true;
+                numExits++;
+            }
         }
 
-        if(s!=null)
+        String spacer;
+        if(numExits <= 2)
         {
-            text+="South ";
+            spacer = " ";
         }
-
-        if(e!=null)
+        else
         {
-            text+="East ";
+            spacer = ", ";
         }
-
-        if(w!=null)
+        
+        int roomCount = numExits;
+        for(int i = 0; i < 4; i++)
         {
-            text+="West ";
+            if(exits[i])
+            {
+                String append = directions[i];
+                if(numExits > 1)
+                {
+                    if(roomCount == 1)
+                    {
+                        append = "and " + append;
+                    }
+                    else
+                    {
+                        append += spacer;
+                    }
+                }
+                text += append;
+                
+                roomCount--;
+            }
         }
-
+        
         tsg.appendMessage(text);
     }
 
@@ -280,13 +301,13 @@ public class DungeonHandler
                     tRooms.add(g);
                     g.setX(r.getX() + 1);
                     g.setY(r.getY());
-                    r.setEast(g);
+                    r.setRoom(TSG.EAST, g);
                     createDoors(g);
                     roomCreated = true;
                 }
             }
         }else{
-            r.setEast(east);
+            r.setRoom(TSG.EAST, east);
         }
 
         if(west==null)
@@ -299,13 +320,13 @@ public class DungeonHandler
                     tRooms.add(g);
                     g.setX(r.getX() - 1);
                     g.setY(r.getY());
-                    r.setWest(g);
+                    r.setRoom(TSG.WEST, g);
                     createDoors(g);
                     roomCreated = true;
                 }
             }
         }else{
-            r.setWest(west);
+            r.setRoom(TSG.WEST, west);
         }
 
         if(north==null)
@@ -318,13 +339,13 @@ public class DungeonHandler
                     tRooms.add(g);
                     g.setX(r.getX());
                     g.setY(r.getY() + 1);
-                    r.setNorth(g);
+                    r.setRoom(TSG.NORTH, g);
                     createDoors(g);
                     roomCreated = true;
                 }
             }
         }else{
-            r.setNorth(north);
+            r.setRoom(TSG.NORTH, north);
         }
 
         if(south==null)
@@ -337,13 +358,13 @@ public class DungeonHandler
                     tRooms.add(g);
                     g.setX(r.getX());
                     g.setY(r.getY() - 1);
-                    r.setSouth(g);
+                    r.setRoom(TSG.SOUTH, g);
                     createDoors(g);
                     roomCreated = true;
                 }
             }
         }else{
-            r.setSouth(south);
+            r.setRoom(TSG.SOUTH, south);
         }
 
         if (roomCreated==false&&aRooms.size()>1)
@@ -355,7 +376,7 @@ public class DungeonHandler
                 tRooms.add(g);
                 g.setX(r.getX());
                 g.setY(r.getY()+1);
-                r.setNorth(g);
+                r.setRoom(TSG.NORTH, g);
                 createDoors(g);
             }else if(south==null){
                 Room g = aRooms.get(random.nextInt(aRooms.size()-1));
@@ -363,7 +384,7 @@ public class DungeonHandler
                 tRooms.add(g);
                 g.setX(r.getX());
                 g.setY(r.getY()-1);
-                r.setSouth(g);
+                r.setRoom(TSG.SOUTH, g);
                 createDoors(g);
             }else if(east==null)
             {
@@ -372,7 +393,7 @@ public class DungeonHandler
                 tRooms.add(g);
                 g.setX(r.getX()+1);
                 g.setY(r.getY());
-                r.setEast(g);
+                r.setRoom(TSG.EAST, g);
                 createDoors(g);
             }else if(west==null)
             {
@@ -381,7 +402,7 @@ public class DungeonHandler
                 tRooms.add(g);
                 g.setX(r.getX()-1);
                 g.setY(r.getY());
-                r.setWest(g);
+                r.setRoom(TSG.WEST, g);
                 createDoors(g);
             }
         }

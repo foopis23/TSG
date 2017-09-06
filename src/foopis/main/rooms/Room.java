@@ -5,10 +5,7 @@ import foopis.main.TSG;
 public class Room
 {
     protected String name;
-    protected Room north;
-    protected Room south;
-    protected Room east;
-    protected Room west;
+    protected Room[] exits = new Room[4];
     protected int x;
     protected int y;
     protected boolean hasEntered;
@@ -50,39 +47,13 @@ public class Room
         this.y=y;
     }
 
-    public void setNorth(Room r) {
-        north=r;
+    public void setRoom(int direction, Room room) {
+        exits[direction] = room;
     }
-
-    public void setSouth(Room r) {
-        south=r;
+    public Room getRoom(int direction) {
+        return exits[direction];
     }
-
-    public void setEast(Room r) {
-        east=r;
-    }
-
-    public void setWest(Room r)
-    {
-        west = r;
-    }
-
-    public Room getNorth() {
-        return north;
-    }
-
-    public Room getWest() {
-        return west;
-    }
-
-    public Room getEast() {
-        return east;
-    }
-
-    public Room getSouth() {
-        return south;
-    }
-
+    
     public String getName() {
         return name;
     }
