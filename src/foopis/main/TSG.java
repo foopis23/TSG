@@ -15,7 +15,7 @@ public class TSG{
     public static final int SOUTH = 2;
     public static final int WEST = 3;
     public static final String TITLE = "TSG";
-    public static final String VERSION = "v2.0 Alpha";
+    public static final String VERSION = "v2.1 Alpha";
 
     public Item obtainedItem;
     public Weapon obtainedWeapon;
