@@ -22,6 +22,7 @@ public class Display extends JTextArea implements KeyListener
         initPanel();
         initFrame();
         inputField.requestFocus();
+        this.setFont(new Font("Georgia",Font.TRUETYPE_FONT,12));
     }
 
     private  void initInput()

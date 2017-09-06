@@ -2,13 +2,15 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
-public class CommandGiveItem implements Command
+public class CommandGiveItem extends Command
 {
-    private String  command ="GiveItem";
 
+    public CommandGiveItem()
+    {
+        command ="GiveItem";
+        isAttackMove = false;
+    }
 
-
-    @Override
     public boolean run(String input, TSG tsg) {
 
         if(input.toLowerCase().contains(command.trim().toLowerCase()))
@@ -17,7 +19,7 @@ public class CommandGiveItem implements Command
                 System.out.println(s);
                 int i = Integer.parseInt(s);
                 if(i<tsg.getItems().size()) {
-                    tsg.obtainItem(tsg.getItems().get(i));
+                    tsg.player.obtainItem(tsg.getItems().get(i), tsg);
                     return true;
                 }else {
                     tsg.appendMessage("Could not find Item ID");
@@ -26,17 +28,5 @@ public class CommandGiveItem implements Command
         }else{
             return false;
         }
-
-
-    }
-
-    @Override
-    public String getCommand() {
-        return command;
-    }
-
-    @Override
-    public boolean isAttackMove() {
-        return false;
     }
 }

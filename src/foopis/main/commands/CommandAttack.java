@@ -2,21 +2,20 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
-public class CommandAttack implements Command
+public class CommandAttack extends Command
 {
-    private String command = "Attack";
+    public CommandAttack()
+    {
+        command = "Attack";
+        isAttackMove = true;
+    }
 
-    @Override
     public boolean run(String input, TSG tsg)
     {
         if(input.toLowerCase().contains(command.toLowerCase().trim()))
         {
             if(tsg.inCombat) {
-                if(tsg.weapon!=null) {
-                    tsg.weapon.use(tsg);
-                }else{
-                    tsg.attack(null);
-                }
+                    tsg.player.attack(tsg);
             }else{
                 tsg.appendMessage("You can't attack outside of combat");
             }
@@ -24,15 +23,5 @@ public class CommandAttack implements Command
         }else{
             return false;
         }
-    }
-
-    @Override
-    public String getCommand() {
-        return command;
-    }
-
-    @Override
-    public boolean isAttackMove() {
-        return true;
     }
 }

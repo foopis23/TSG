@@ -4,11 +4,14 @@ import foopis.main.TSG;
 
 import java.util.LinkedList;
 
-public class CommandHelp implements Command {
+public class CommandHelp extends Command {
 
-    private String command = "Help";
+    public CommandHelp()
+    {
+        command = "Help";
+        isAttackMove = false;
+    }
 
-    @Override
     public boolean run(String input, TSG tsg)
     {
         if(input.toLowerCase().contains(command.trim().toLowerCase()))
@@ -28,16 +31,5 @@ public class CommandHelp implements Command {
             tsg.appendMessage(s.toString());
             return true;
         }else return false;
-    }
-
-    @Override
-    public String getCommand()
-    {
-        return command;
-    }
-
-    @Override
-    public boolean isAttackMove() {
-        return false;
     }
 }

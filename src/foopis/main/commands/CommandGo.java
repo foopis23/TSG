@@ -2,11 +2,14 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
-public class CommandGo implements Command
+public class CommandGo extends Command
 {
-    String command = "Go";
+    public CommandGo()
+    {
+        command = "Go";
+        isAttackMove = false;
+    }
 
-    @Override
     public boolean run(String input, TSG tsg)
     {
         if(input.toLowerCase().contains(command.trim().toLowerCase())&&!tsg.inCombat)
@@ -31,15 +34,5 @@ public class CommandGo implements Command
         }else{
             return false;
         }
-    }
-
-    @Override
-    public String getCommand() {
-        return command;
-    }
-
-    @Override
-    public boolean isAttackMove() {
-        return false;
     }
 }

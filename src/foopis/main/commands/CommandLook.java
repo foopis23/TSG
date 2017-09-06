@@ -2,10 +2,15 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
-public class CommandLook implements Command
+public class CommandLook extends Command
 {
-    String command = "Look";
-    @Override
+
+    public CommandLook()
+    {
+        command = "Look";
+        isAttackMove = false;
+    }
+
     public boolean run(String input, TSG tsg) {
         if(input.toLowerCase().contains(command.toLowerCase().trim()))
         {
@@ -19,15 +24,5 @@ public class CommandLook implements Command
         }else{
             return false;
         }
-    }
-
-    @Override
-    public String getCommand() {
-        return command;
-    }
-
-    @Override
-    public boolean isAttackMove() {
-        return false;
     }
 }

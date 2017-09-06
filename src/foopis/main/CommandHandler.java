@@ -14,10 +14,10 @@ public class CommandHandler extends LinkedList<Command>
         ran = false;
         combatMove = false;
 
-        if(tsg.obtainedItem!=null)
+        if(tsg.player.getObtainedItem()!=null)
         {
             ran = itemScrapping(input,tsg);
-        }else if(tsg.obtainedWeapon!=null)
+        }else if(tsg.player.getObtainedWeapon()!=null)
         {
             ran = weaponScrapping(input,tsg);
         }else{
@@ -40,14 +40,6 @@ public class CommandHandler extends LinkedList<Command>
         if (!ran) {
             tsg.appendMessage("Unknown Command");
         }
-
-        if(tsg.health<=0)
-        {
-            tsg.appendMessage("GameOver! You died at level "+tsg.level);
-            tsg.appendMessage("Starting New Game!");
-            tsg.initGame();
-        }
-
     }
 
     public boolean RunCommands(String input, TSG tsg)
@@ -65,14 +57,13 @@ public class CommandHandler extends LinkedList<Command>
     {
         if(input.toLowerCase().contains("yes"))
         {
-            tsg.appendMessage("You replaced "+tsg.weapon.getName()+" with "+ tsg.obtainedWeapon.getName());
-            tsg.weapon = tsg.obtainedWeapon;
-            tsg.obtainedWeapon = null;
+            tsg.appendMessage("You replaced "+tsg.player.getWeapon().getName()+" with "+ tsg.player.getObtainedWeapon().getName());
+            tsg.player.replaceWeapon();
             return true;
         }else if(input.toLowerCase().contains("no"))
         {
-            tsg.appendMessage("You scrapped "+ tsg.obtainedWeapon.getName());
-            tsg.obtainedWeapon=null;
+            tsg.appendMessage("You scrapped "+ tsg.player.getObtainedWeapon().getName());
+            tsg.player.scrapObtainedWeapon();
             return true;
         }else{
             tsg.appendMessage("That is not a valid command right now!");
@@ -84,24 +75,22 @@ public class CommandHandler extends LinkedList<Command>
 
     public boolean itemScrapping(String input, TSG tsg)
     {
-        if (input.toLowerCase().contains("no")) {
-            tsg.obtainedItem = null;
+        if (input.toLowerCase().contains("no"))
+        {
             tsg.appendMessage("You scrapped the Item");
+            tsg.player.scarpObtainedItem();
             return true;
         } else if (input.toLowerCase().contains("1")) {
-            tsg.appendMessage(tsg.item1.getName() + " has been scrapped for " + tsg.obtainedItem.getName());
-            tsg.item1 = tsg.obtainedItem;
-            tsg.obtainedItem = null;
+            tsg.appendMessage(tsg.player.getItems(1).getName() + " has been scrapped for " + tsg.player.getObtainedItem().getName());
+            tsg.player.replaceItem(1);
             return true;
         } else if (input.toLowerCase().contains("2")) {
-            tsg.appendMessage(tsg.item2.getName() + " has been scrapped for " + tsg.obtainedItem.getName());
-            tsg.item2 = tsg.obtainedItem;
-            tsg.obtainedItem = null;
+            tsg.appendMessage(tsg.player.getItems(2).getName() + " has been scrapped for " + tsg.player.getObtainedItem().getName());
+            tsg.player.replaceItem(2);
             return true;
         } else if (input.toLowerCase().contains("3")) {
-            tsg.appendMessage(tsg.item3.getName() + " has been scrapped for " + tsg.obtainedItem.getName());
-            tsg.item3 = tsg.obtainedItem;
-            tsg.obtainedItem = null;
+            tsg.appendMessage(tsg.player.getItems(3).getName() + " has been scrapped for " + tsg.player.getObtainedItem().getName());
+            tsg.player.replaceItem(3);
             return true;
         } else {
             tsg.appendMessage("That is not a valid command right now!");

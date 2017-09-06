@@ -2,37 +2,88 @@ package foopis.main.rooms;
 
 import foopis.main.TSG;
 
-public interface Room {
+public class Room
+{
+    protected String name;
+    protected Room north;
+    protected Room south;
+    protected Room east;
+    protected Room west;
+    protected int x;
+    protected int y;
+    protected boolean hasEntered;
+    protected double thotChance;
+    
+    public void action(TSG tsg) {
+        tsg.appendMessage("Undefined room");
+    }
 
-    void action(TSG tsg);
+    public void roomEntered(TSG tsg)
+    {
+        if(!hasEntered)
+        {
+            hasEntered=true;
+            tsg.encounter(thotChance);
+        }else{
+            tsg.encounter(thotChance/2);
+        }
+    }
 
-    void roomEntered(TSG tsg);
+    public double getEncountChance() {
+        return thotChance;
+    }
 
-    double getEncountChance();
 
-    int getX();
+    public int getX() {
+        return x;
+    }
 
-    int getY();
+    public int getY() {
+        return y;
+    }
 
-    void setX(int x);
+    public void setX(int x) {
+        this.x=x;
+    }
 
-    void setY(int y);
+    public void setY(int y) {
+        this.y=y;
+    }
 
-    void setNorth(Room r);
+    public void setNorth(Room r) {
+        north=r;
+    }
 
-    void setSouth(Room r);
+    public void setSouth(Room r) {
+        south=r;
+    }
 
-    void setEast(Room r);
+    public void setEast(Room r) {
+        east=r;
+    }
 
-    void setWest(Room r);
+    public void setWest(Room r)
+    {
+        west = r;
+    }
 
-    Room getNorth();
+    public Room getNorth() {
+        return north;
+    }
 
-    Room getWest();
+    public Room getWest() {
+        return west;
+    }
 
-    Room getEast();
+    public Room getEast() {
+        return east;
+    }
 
-    Room getSouth();
+    public Room getSouth() {
+        return south;
+    }
 
-    public String getName();
+    public String getName() {
+        return name;
+    }
 }
