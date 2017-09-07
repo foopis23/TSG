@@ -24,7 +24,7 @@ public class Player
     private Item obtainedItem;
     private Weapon obtainedWeapon;
 
-    public Player()
+    public Player(TSG tsg)
     {
         health = 100;
         healthLimit = health;
@@ -34,15 +34,15 @@ public class Player
         xpToLevel = 100;
         level = 1;
         items = new Item[3];
-        items[0] = null;
+        items[0] = tsg.getItemByName("Ramen");
         items[1] = null;
         items[2] = null;
-        weapon = null;
+        weapon = tsg.getWeaponByName("Normie Sword");
         obtainedItem = null;
         obtainedWeapon = null;
     }
 
-    public void reset()
+    public void reset(TSG tsg)
     {
         health = 100;
         healthLimit = health;
@@ -51,10 +51,10 @@ public class Player
         xp=0;
         xpToLevel = 100;
         level = 1;
-        items[0] = null;
+        items[0] = tsg.getItemByName("Ramen");
         items[1] = null;
         items[2] = null;
-        weapon = null;
+        weapon = tsg.getWeaponByName("Normie Sword");
         obtainedItem = null;
         obtainedWeapon = null;
     }

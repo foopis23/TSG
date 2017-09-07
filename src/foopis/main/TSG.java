@@ -100,7 +100,7 @@ public class TSG{
 
     public void initGame()
     {
-        player = new Player();
+        player = new Player(this);
         inCombat = false;
         hasText = false;
         thot = null;
@@ -128,6 +128,25 @@ public class TSG{
 
     public Item getItemByName(String name)
     {
+        for(Item item: items)
+        {
+            if(item.getName().trim().toLowerCase().contains(name.toLowerCase().trim()))
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Weapon getWeaponByName(String name)
+    {
+        for(Weapon weapon: weapons)
+        {
+            if(weapon.getName().trim().toLowerCase().contains(name.trim().toLowerCase()))
+            {
+                return weapon;
+            }
+        }
         return null;
     }
 
@@ -150,7 +169,7 @@ public class TSG{
     {
         appendMessage("GameOver! You died at level "+player.getLevel());
         appendMessage("Starting New Game!");
-        player.reset();
+        player.reset(this);
         inCombat = false;
         hasText = false;
         thot = null;
