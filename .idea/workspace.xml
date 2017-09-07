@@ -7,46 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bb7f254-cab2-472b-8850-f138fc0eb2ec" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/META-INF/MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/CommandHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/Display.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/DungeonHandler.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/Player.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/TSG.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/Command.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandAttack.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandClear.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandComicSans.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandGiveItem.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandGo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandHelp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandInventory.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandItems.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandLook.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandRoomAction.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandStats.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/commands/CommandUseItem.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/enemies/Enemy.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/enemies/Thot.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/Item.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/ItemAshScroll.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/ItemBlackEye.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/ItemDankMeme.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/ItemOnigiri.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/ItemPizza.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/weapons/Weapon.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/weapons/WeaponCarbine.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/weapons/WeaponDiamondPicaxe.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/weapons/WeaponNormieSword.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/items/weapons/WeaponThotStaff.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/rooms/Room.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/rooms/RoomEmpty.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/rooms/RoomHiddenTreasure.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/rooms/RoomLadder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/rooms/RoomTrappedTreasure.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/foopis/main/rooms/RoomTreasure.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/foopis/main/commands/CommandItems.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/artifacts/TSG_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/TSG.iml" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -126,6 +93,20 @@
               <item name="TSG" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GameMachineBroke" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TSG" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GameMachineBroke" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TSG" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="enemies" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -274,7 +255,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -289,7 +269,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -316,6 +296,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="37" lean-forward="false" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TSG.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
