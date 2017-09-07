@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TSG:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TSG_jar</output-path>
+    <root id="archive" name="TSG.jar">
+      <element id="module-output" name="TSG" />
+    </root>
+  </artifact>
+</component>
