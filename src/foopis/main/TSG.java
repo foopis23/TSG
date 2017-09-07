@@ -79,6 +79,8 @@ public class TSG{
         items.add(new ItemPizza());
         items.add(new ItemAshScroll());
         items.add(new ItemBlackEye());
+        items.add(new ItemQuarter());
+        items.add(new ItemRamenNoodles());
     }
 
     private void initWeapons()
@@ -124,17 +126,23 @@ public class TSG{
         thot = null;
     }
 
+    public Item getItemByName(String name)
+    {
+        return null;
+    }
+
     public void getRandomIOW()
     {
-        int i= random.nextInt(weapons.size()+items.size()-1);
-        Item item = null;
-        if(i>weapons.size())
+        double chanceOfItem = .65;
+        int i= random.nextInt(99);
+
+        if(chanceOfItem<(99*chanceOfItem))
         {
-            item = items.get((i-(weapons.size()-1)));
-            player.obtainItem(item,this);
+            i = random.nextInt(items.size()-1);
+            player.obtainItem(items.get(i), this);
         }else{
-            item = weapons.get(i);
-            player.obtainWeapon(item,this);
+            i = random.nextInt(weapons.size()-1);
+            player.obtainWeapon(weapons.get(i),this);
         }
     }
 
@@ -142,7 +150,11 @@ public class TSG{
     {
         appendMessage("GameOver! You died at level "+player.getLevel());
         appendMessage("Starting New Game!");
-        initGame();
+        player.reset();
+        inCombat = false;
+        hasText = false;
+        thot = null;
+        dungeonHandler.createFloor(this);
     }
 
     void runAction(String input)
