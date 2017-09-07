@@ -5,3 +5,5 @@
 .idea/workspace.xml
 TSG.iml
 .idea/workspace.xml
+*.class
+*.MF
