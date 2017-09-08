@@ -91,6 +91,8 @@ public class TSG{
         weapons.add(new WeaponDiamondPicaxe());
         weapons.add(new WeaponThotStaff());
         weapons.add(new WeaponCarbine());
+        weapons.add(new WeaponYoyo());
+        weapons.add(new WeaponSagiriVoice());
     }
 
     private void initDungeon()

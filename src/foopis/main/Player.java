@@ -26,20 +26,8 @@ public class Player
 
     public Player(TSG tsg)
     {
-        health = 100;
-        healthLimit = health;
-        damageBoost = 0;
-        defenseBoost= 0;
-        xp=0;
-        xpToLevel = 100;
-        level = 1;
         items = new Item[3];
-        items[0] = tsg.getItemByName("Ramen");
-        items[1] = null;
-        items[2] = null;
-        weapon = tsg.getWeaponByName("Normie Sword");
-        obtainedItem = null;
-        obtainedWeapon = null;
+        reset(tsg);
     }
 
     public void reset(TSG tsg)
@@ -116,9 +104,9 @@ public class Player
                     int d = weapon.getDamage() + damageBoost;
                     if (tsg.thot != null) {
                         tsg.thot.takeDamage(d);
+                        tsg.appendMessage("You did " + d + " damage with " + weapon.getName());
                         weapon.use(tsg);
                     }
-                    tsg.appendMessage("You did " + d + " damage with " + weapon.getName());
                 } else {
                     if (tsg.thot != null) {
                         tsg.thot.takeDamage(2);
