@@ -200,7 +200,7 @@ public class Player
         else{s+="empty\n";}
 
         s+="Weapon: ";
-        if(weapon!=null) {s+=weapon.getName()+"";}
+        if(weapon!=null) {s+=weapon.getName()+"\n";}
         else{s+="empty\n";}
         s+="------------------------------------------";
 

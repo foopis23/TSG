@@ -9,7 +9,7 @@ public class RoomTrappedTreasure extends Room
 
     public RoomTrappedTreasure ()
     {
-        name="Trease Room.";
+        name="Treasure Room.";
         north=null;
         south=null;
         east=null;

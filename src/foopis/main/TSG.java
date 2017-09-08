@@ -168,7 +168,7 @@ public class TSG{
     public void gameOver()
     {
         appendMessage("GameOver! You died at level "+player.getLevel());
-        appendMessage("Starting New Game!");
+        appendMessage("Starting New Game!+\n");
         player.reset(this);
         inCombat = false;
         hasText = false;
