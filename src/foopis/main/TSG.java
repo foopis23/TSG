@@ -36,6 +36,7 @@ public class TSG{
     CommandHandler commandHandler;
     private LinkedList<Item> items;
     private LinkedList<Weapon> weapons;
+    private LinkedList<String> commandsEntered;
     /////////////////////////////////
 
     public TSG()
@@ -53,6 +54,7 @@ public class TSG{
     private void initCommands()
     {
         commandHandler = new CommandHandler();
+        commandsEntered = new LinkedList<>();
 
         commandHandler.add(new CommandHelp());
         commandHandler.add(new CommandClear());
@@ -180,8 +182,28 @@ public class TSG{
 
     void runAction(String input)
     {
+        commandsEntered.add(input);
         commandHandler.RunAction(input,this);
         player.run(this);
+    }
+
+    public int getHistorySize()
+    {
+        return commandsEntered.size();
+    }
+
+    public String getCommandHistory(int i)
+    {
+        if(i<commandsEntered.size()-1) {
+            if(i==0)
+            {
+                return null;
+            }else{
+                return commandsEntered.get((commandsEntered.size() - 1) - i);
+            }
+        }else{
+            return null;
+        }
     }
 
     public void appendMessage(String message)
