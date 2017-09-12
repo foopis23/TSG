@@ -5,7 +5,7 @@ import foopis.main.TSG;
 public class Room
 {
     protected String name;
-    protected Room[] exits = new Room[4];
+    protected boolean[] exits = {false, false, false, false};
     protected int x;
     protected int y;
     protected boolean hasEntered;
@@ -47,14 +47,28 @@ public class Room
         this.y=y;
     }
 
-    public void setRoom(int direction, Room room) {
-        exits[direction] = room;
+    public void setExit(int direction, boolean exit) {
+        exits[direction] = exit;
     }
-    public Room getRoom(int direction) {
+    public boolean isExit(int direction) {
         return exits[direction];
     }
     
     public String getName() {
         return name;
+    }
+    
+    public int getNumExits()
+    {
+        int num = 0;
+        for(boolean isExit: exits)
+        {
+            if(isExit)
+            {
+                num++;
+            }
+        }
+        
+        return num;
     }
 }

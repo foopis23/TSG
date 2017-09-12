@@ -63,6 +63,7 @@ public class TSG{
         initWeapons();
         initDungeon();
         initGame();
+        System.out.println("aasdf");
     }
 
     private void initCommands()
