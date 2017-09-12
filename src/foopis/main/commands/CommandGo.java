@@ -14,7 +14,7 @@ public class CommandGo extends Command
     {
         if(input.toLowerCase().contains(command.trim().toLowerCase()))
         {
-            if(tsg.inCombat) {
+            if(!tsg.inCombat) {
                 if (input.toLowerCase().trim().contains("north") || input.toLowerCase().trim().contains("no")) {
                     tsg.dungeonHandler.go(tsg, TSG.NORTH);
                 } else if (input.toLowerCase().trim().contains("east") || input.toLowerCase().trim().contains("ea")) {

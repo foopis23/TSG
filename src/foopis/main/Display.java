@@ -1,6 +1,7 @@
 package foopis.main;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -41,6 +42,9 @@ public class Display extends JTextArea implements KeyListener
         this.setLineWrap(false);
         this.setEditable(false);
         this.setVisible(true);
+
+        DefaultCaret caret = (DefaultCaret)this.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         scroll  = new JScrollPane (this);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
