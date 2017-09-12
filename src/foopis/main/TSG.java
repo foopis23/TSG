@@ -15,7 +15,7 @@ public class TSG{
     public static final int SOUTH = 2;
     public static final int WEST = 3;
     public static final String TITLE = "TSG";
-    public static final String VERSION = "v2.1 Alpha";
+    public static final String VERSION = "v2.2 Alpha";
 
     public Thot thot;
     public DungeonHandler dungeonHandler;
@@ -94,7 +94,6 @@ public class TSG{
         weapons.add(new WeaponThotStaff());
         weapons.add(new WeaponCarbine());
         weapons.add(new WeaponYoyo());
-        weapons.add(new WeaponSagiriVoice());
     }
 
     private void initDungeon()
@@ -194,12 +193,12 @@ public class TSG{
 
     public String getCommandHistory(int i)
     {
-        if(i<commandsEntered.size()-1) {
+        if(i<=commandsEntered.size()) {
             if(i==0)
             {
                 return null;
             }else{
-                return commandsEntered.get((commandsEntered.size() - 1) - i);
+                return commandsEntered.get((commandsEntered.size()) - i);
             }
         }else{
             return null;

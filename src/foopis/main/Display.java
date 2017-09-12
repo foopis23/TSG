@@ -93,7 +93,7 @@ public class Display extends JTextArea implements KeyListener
             history++;
             if(history>tsg.getHistorySize())
             {
-                history= tsg.getHistorySize();
+                history = tsg.getHistorySize();
             }
             String s = tsg.getCommandHistory(history);
             inputField.setText(s);

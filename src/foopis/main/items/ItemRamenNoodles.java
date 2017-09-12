@@ -16,7 +16,7 @@ public class ItemRamenNoodles extends Item
         tsg.player.heal(healthBoost);
         tsg.appendMessage("You have consumed RaMeN NoOdLeS");
         tsg.appendMessage("Its cheap, but still surprisingly filling");
-        tsg.appendMessage("Health: "+oldHealth+" -+"+healthBoost+ "-> "+tsg.player.getHealth());
+        tsg.appendMessage("Health: "+oldHealth+" --(+"+healthBoost+ ")--> "+tsg.player.getHealth());
         return true;
     }
 }

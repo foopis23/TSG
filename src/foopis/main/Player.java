@@ -63,7 +63,7 @@ public class Player
     public void levelUp(TSG tsg)
     {
         tsg.appendMessage("LEVEL UP!");
-        tsg.appendMessage("Level: "+this.level+" -+1--> "+(this.level+1));
+        tsg.appendMessage("Level: "+this.level+" --(+1)--> "+(this.level+1));
         level++;
         this.xp -= xpToLevel;
         xpToLevel+=50;
@@ -92,7 +92,7 @@ public class Player
 
     public void gainExperience(int xp, TSG tsg)
     {
-        tsg.appendMessage("XP: "+this.xp+" -+"+xp+"--> "+(this.xp+xp));
+        tsg.appendMessage("XP: "+this.xp+" --(+"+xp+")--> "+(this.xp+xp));
         this.xp+=xp;
     }
 
