@@ -24,25 +24,13 @@ public class Player
     private Item obtainedItem;
     private Weapon obtainedWeapon;
 
-    public Player()
+    public Player(TSG tsg)
     {
-        health = 100;
-        healthLimit = health;
-        damageBoost = 0;
-        defenseBoost= 0;
-        xp=0;
-        xpToLevel = 100;
-        level = 1;
         items = new Item[3];
-        items[0] = null;
-        items[1] = null;
-        items[2] = null;
-        weapon = null;
-        obtainedItem = null;
-        obtainedWeapon = null;
+        reset(tsg);
     }
 
-    public void reset()
+    public void reset(TSG tsg)
     {
         health = 100;
         healthLimit = health;
@@ -51,10 +39,10 @@ public class Player
         xp=0;
         xpToLevel = 100;
         level = 1;
-        items[0] = null;
+        items[0] = tsg.getItemByName("Ramen");
         items[1] = null;
         items[2] = null;
-        weapon = null;
+        weapon = tsg.getWeaponByName("Normie Sword");
         obtainedItem = null;
         obtainedWeapon = null;
     }
@@ -75,7 +63,7 @@ public class Player
     public void levelUp(TSG tsg)
     {
         tsg.appendMessage("LEVEL UP!");
-        tsg.appendMessage("Level: "+this.level+" -+1--> "+(this.level+1));
+        tsg.appendMessage("Level: "+this.level+" --(+1)--> "+(this.level+1));
         level++;
         this.xp -= xpToLevel;
         xpToLevel+=50;
@@ -104,7 +92,7 @@ public class Player
 
     public void gainExperience(int xp, TSG tsg)
     {
-        tsg.appendMessage("XP: "+this.xp+" -+"+xp+"--> "+(this.xp+xp));
+        tsg.appendMessage("XP: "+this.xp+" --(+"+xp+")--> "+(this.xp+xp));
         this.xp+=xp;
     }
 
@@ -116,9 +104,9 @@ public class Player
                     int d = weapon.getDamage() + damageBoost;
                     if (tsg.thot != null) {
                         tsg.thot.takeDamage(d);
+                        tsg.appendMessage("You did " + d + " damage with " + weapon.getName());
                         weapon.use(tsg);
                     }
-                    tsg.appendMessage("You did " + d + " damage with " + weapon.getName());
                 } else {
                     if (tsg.thot != null) {
                         tsg.thot.takeDamage(2);
@@ -200,7 +188,7 @@ public class Player
         else{s+="empty\n";}
 
         s+="Weapon: ";
-        if(weapon!=null) {s+=weapon.getName()+"";}
+        if(weapon!=null) {s+=weapon.getName()+"\n";}
         else{s+="empty\n";}
         s+="------------------------------------------";
 

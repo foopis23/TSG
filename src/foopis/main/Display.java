@@ -12,6 +12,7 @@ public class Display extends JTextArea implements KeyListener
     private JTextField inputField;
     private JScrollPane scroll;
     private TSG tsg;
+    private int history;
 
     Display(TSG tsg)
     {
@@ -28,6 +29,7 @@ public class Display extends JTextArea implements KeyListener
     private  void initInput()
     {
         inputField = new JTextField();
+        history = 0;
         inputField.addKeyListener(this);
         inputField.setMinimumSize(new Dimension(675,25));
         inputField.setPreferredSize(new Dimension(675,25));
@@ -83,6 +85,29 @@ public class Display extends JTextArea implements KeyListener
         {
             tsg.runAction(inputField.getText());
             inputField.setText(null);
+            history=0;
+        }
+
+        if(e.getKeyCode()==KeyEvent.VK_UP)
+        {
+            history++;
+            if(history>tsg.getHistorySize())
+            {
+                history = tsg.getHistorySize();
+            }
+            String s = tsg.getCommandHistory(history);
+            inputField.setText(s);
+        }
+
+        if(e.getKeyCode()==KeyEvent.VK_DOWN)
+        {
+            history--;
+            if(history<0)
+            {
+                history=0;
+            }
+            String s = tsg.getCommandHistory(history);
+            inputField.setText(s);
         }
     }
 

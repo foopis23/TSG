@@ -15,7 +15,7 @@ public class TSG{
     public static final int SOUTH = 2;
     public static final int WEST = 3;
     public static final String TITLE = "TSG";
-    public static final String VERSION = "v2.1 Alpha";
+    public static final String VERSION = "v2.2 Alpha";
 
     public Thot thot;
     public DungeonHandler dungeonHandler;
@@ -36,6 +36,7 @@ public class TSG{
     CommandHandler commandHandler;
     private LinkedList<Item> items;
     private LinkedList<Weapon> weapons;
+    private LinkedList<String> commandsEntered;
     /////////////////////////////////
 
     public TSG()
@@ -53,6 +54,7 @@ public class TSG{
     private void initCommands()
     {
         commandHandler = new CommandHandler();
+        commandsEntered = new LinkedList<>();
 
         commandHandler.add(new CommandHelp());
         commandHandler.add(new CommandClear());
@@ -79,6 +81,8 @@ public class TSG{
         items.add(new ItemPizza());
         items.add(new ItemAshScroll());
         items.add(new ItemBlackEye());
+        items.add(new ItemQuarter());
+        items.add(new ItemRamenNoodles());
     }
 
     private void initWeapons()
@@ -89,6 +93,7 @@ public class TSG{
         weapons.add(new WeaponDiamondPicaxe());
         weapons.add(new WeaponThotStaff());
         weapons.add(new WeaponCarbine());
+        weapons.add(new WeaponYoyo());
     }
 
     private void initDungeon()
@@ -98,7 +103,7 @@ public class TSG{
 
     public void initGame()
     {
-        player = new Player();
+        player = new Player(this);
         inCombat = false;
         hasText = false;
         thot = null;
@@ -124,31 +129,80 @@ public class TSG{
         thot = null;
     }
 
+    public Item getItemByName(String name)
+    {
+        for(Item item: items)
+        {
+            if(item.getName().trim().toLowerCase().contains(name.toLowerCase().trim()))
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public Weapon getWeaponByName(String name)
+    {
+        for(Weapon weapon: weapons)
+        {
+            if(weapon.getName().trim().toLowerCase().contains(name.trim().toLowerCase()))
+            {
+                return weapon;
+            }
+        }
+        return null;
+    }
+
     public void getRandomIOW()
     {
-        int i= random.nextInt(weapons.size()+items.size()-1);
-        Item item = null;
-        if(i>weapons.size())
+        double chanceOfItem = .65;
+        int i= random.nextInt(99);
+
+        if(chanceOfItem<(99*chanceOfItem))
         {
-            item = items.get((i-(weapons.size()-1)));
-            player.obtainItem(item,this);
+            i = random.nextInt(items.size()-1);
+            player.obtainItem(items.get(i), this);
         }else{
-            item = weapons.get(i);
-            player.obtainWeapon(item,this);
+            i = random.nextInt(weapons.size()-1);
+            player.obtainWeapon(weapons.get(i),this);
         }
     }
 
     public void gameOver()
     {
         appendMessage("GameOver! You died at level "+player.getLevel());
-        appendMessage("Starting New Game!");
-        initGame();
+        appendMessage("Starting New Game!+\n");
+        player.reset(this);
+        inCombat = false;
+        hasText = false;
+        thot = null;
+        dungeonHandler.createFloor(this);
     }
 
     void runAction(String input)
     {
+        commandsEntered.add(input);
         commandHandler.RunAction(input,this);
         player.run(this);
+    }
+
+    public int getHistorySize()
+    {
+        return commandsEntered.size();
+    }
+
+    public String getCommandHistory(int i)
+    {
+        if(i<=commandsEntered.size()) {
+            if(i==0)
+            {
+                return null;
+            }else{
+                return commandsEntered.get((commandsEntered.size()) - i);
+            }
+        }else{
+            return null;
+        }
     }
 
     public void appendMessage(String message)
