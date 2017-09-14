@@ -26,7 +26,7 @@ public class DungeonHandler
         switch(direction)
         {
         case 0:
-            room = findRoom(x,y+1);
+            room = findRoom(x,y-1);
             break;
 
         case 1:
@@ -34,7 +34,7 @@ public class DungeonHandler
             break;
 
         case 2:
-            room = findRoom(x,y-1);
+            room = findRoom(x,y+1);
             break;
 
         case 3:

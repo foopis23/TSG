@@ -13,7 +13,6 @@ public class WeaponNormieSword extends Weapon
 
     public boolean use(TSG tsg)
     {
-        tsg.attack(this);
         return true;
     }
 }

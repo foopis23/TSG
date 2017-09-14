@@ -15,11 +15,7 @@ public class CommandAttack extends Command
         if(input.toLowerCase().contains(command.toLowerCase().trim()))
         {
             if(tsg.inCombat) {
-                if(tsg.weapon!=null) {
-                    tsg.weapon.use(tsg);
-                }else{
-                    tsg.attack(null);
-                }
+                    tsg.player.attack(tsg);
             }else{
                 tsg.appendMessage("You can't attack outside of combat");
             }

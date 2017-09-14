@@ -14,7 +14,6 @@ public class WeaponThotStaff extends Weapon
     public boolean use(TSG tsg)
     {
         tsg.appendMessage("BE GONE THOT!");
-        tsg.attack(this);
         return true;
     }
 }

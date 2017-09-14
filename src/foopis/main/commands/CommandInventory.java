@@ -15,10 +15,7 @@ public class CommandInventory extends Command
     {
         if(input.toLowerCase().contains(command.toLowerCase().trim()))
         {
-            String s=tsg.getInventory();
-            tsg.appendMessage("---------------Inventory---------------");
-            tsg.appendMessage(s);
-            tsg.appendMessage("------------------------------------------");
+            tsg.appendMessage(tsg.player.getInventory());
             return true;
         }else return false;
     }

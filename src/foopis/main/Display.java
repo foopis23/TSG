@@ -1,6 +1,7 @@
 package foopis.main;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,6 +13,7 @@ public class Display extends JTextArea implements KeyListener
     private JTextField inputField;
     private JScrollPane scroll;
     private TSG tsg;
+    private int history;
 
     Display(TSG tsg)
     {
@@ -22,11 +24,13 @@ public class Display extends JTextArea implements KeyListener
         initPanel();
         initFrame();
         inputField.requestFocus();
+        this.setFont(new Font("Georgia",Font.TRUETYPE_FONT,12));
     }
 
     private  void initInput()
     {
         inputField = new JTextField();
+        history = 0;
         inputField.addKeyListener(this);
         inputField.setMinimumSize(new Dimension(675,25));
         inputField.setPreferredSize(new Dimension(675,25));
@@ -38,6 +42,9 @@ public class Display extends JTextArea implements KeyListener
         this.setLineWrap(false);
         this.setEditable(false);
         this.setVisible(true);
+
+        DefaultCaret caret = (DefaultCaret)this.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         scroll  = new JScrollPane (this);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -82,6 +89,29 @@ public class Display extends JTextArea implements KeyListener
         {
             tsg.runAction(inputField.getText());
             inputField.setText(null);
+            history=0;
+        }
+
+        if(e.getKeyCode()==KeyEvent.VK_UP)
+        {
+            history++;
+            if(history>tsg.getHistorySize())
+            {
+                history = tsg.getHistorySize();
+            }
+            String s = tsg.getCommandHistory(history);
+            inputField.setText(s);
+        }
+
+        if(e.getKeyCode()==KeyEvent.VK_DOWN)
+        {
+            history--;
+            if(history<0)
+            {
+                history=0;
+            }
+            String s = tsg.getCommandHistory(history);
+            inputField.setText(s);
         }
     }
 
