@@ -7,10 +7,6 @@ public class RoomEmpty extends Room
     public RoomEmpty ()
     {
         name="Empty Room";
-        north=null;
-        south=null;
-        east=null;
-        west=null;
         hasEntered=false;
         thotChance=.20;
     }

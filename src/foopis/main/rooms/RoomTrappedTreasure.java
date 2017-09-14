@@ -10,10 +10,13 @@ public class RoomTrappedTreasure extends Room
     public RoomTrappedTreasure ()
     {
         name="Treasure Room.";
+<<<<<<< HEAD
+=======
         north=null;
         south=null;
         east=null;
         west=null;
+>>>>>>> Release
         hasEntered=false;
         thotChance=.20;
         treasureOpenned=false;

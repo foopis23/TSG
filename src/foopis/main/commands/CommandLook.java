@@ -16,7 +16,7 @@ public class CommandLook extends Command
         {
             if(!tsg.inCombat)
             {
-                tsg.dungeonHandler.look(tsg);
+                tsg.dungeonHandler.displayRoomInfo(tsg, false);
             }else{
                 tsg.appendMessage("You can't use this command while in combat");
             }

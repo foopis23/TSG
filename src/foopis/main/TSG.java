@@ -15,7 +15,11 @@ public class TSG{
     public static final int SOUTH = 2;
     public static final int WEST = 3;
     public static final String TITLE = "TSG";
+<<<<<<< HEAD
+    public static final String VERSION = "v3.0 Alpha";
+=======
     public static final String VERSION = "v2.2 Alpha";
+>>>>>>> Release
 
     public Thot thot;
     public DungeonHandler dungeonHandler;

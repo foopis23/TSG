@@ -7,10 +7,6 @@ public class RoomLadder extends Room
     public RoomLadder ()
     {
         name="Ladder Room";
-        north=null;
-        south=null;
-        east=null;
-        west=null;
         hasEntered=false;
         thotChance=.20;
     }

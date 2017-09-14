@@ -9,10 +9,6 @@ public class RoomTreasure extends Room
     public RoomTreasure ()
     {
         name="Treasure Room";
-        north=null;
-        south=null;
-        east=null;
-        west=null;
         hasEntered=false;
         thotChance=.20;
         treasureOpenned=false;
