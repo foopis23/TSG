@@ -1,0 +1,9 @@
+
+.idea/.name
+.idea/artifacts/TSG_jar.xml
+*.xml
+.idea/workspace.xml
+TSG.iml
+.idea/workspace.xml
+*.class
+*.MF
