@@ -14,7 +14,7 @@ public class CommandItems extends Command
     {
         if(input.toLowerCase().contains(command.toLowerCase().trim()))
         {
-            String s=tsg.getInventory();
+            String s=tsg.player.getInventory();
             tsg.appendMessage(s);
             return true;
         }else return false;
