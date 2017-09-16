@@ -15,7 +15,7 @@ public class TSG{
     public static final int SOUTH = 2;
     public static final int WEST = 3;
     public static final String TITLE = "TSG";
-    public static final String VERSION = "v3.0 Alpha";
+    public static final String VERSION = "v3.1 Alpha";
 
     public Thot thot;
     public DungeonHandler dungeonHandler;
@@ -60,12 +60,10 @@ public class TSG{
         commandHandler.add(new CommandClear());
         commandHandler.add(new CommandComicSans());
         commandHandler.add(new CommandUseItem());
-        commandHandler.add(new CommandInventory());
         commandHandler.add(new CommandAttack());
         commandHandler.add(new CommandGo());
         commandHandler.add(new CommandRoomAction());
-        commandHandler.add(new CommandLook());
-        commandHandler.add(new CommandStats());
+        commandHandler.add(new CommandLook());;
         if(debug)
         {
             commandHandler.add(new CommandGiveItem());
@@ -108,6 +106,7 @@ public class TSG{
         hasText = false;
         thot = null;
         dungeonHandler.createFloor(this);
+        display.displayStats(player.getStats(),player.getInventory());
     }
 
     public void encounter(double chance)
@@ -184,6 +183,7 @@ public class TSG{
         commandsEntered.add(input);
         commandHandler.RunAction(input,this);
         player.run(this);
+        display.displayStats(player.getStats(),player.getInventory());
     }
 
     public int getHistorySize()
@@ -217,7 +217,7 @@ public class TSG{
 
     public void clearDisplay()
     {
-        display.setText(null);
+        display.clearDisplay();
         hasText=false;
     }
 

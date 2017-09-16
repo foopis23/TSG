@@ -165,15 +165,13 @@ public class Player
             items[2] = item;
             obtainedItem = null;
         } else {
-            String s = getInventory();
-            tsg.appendMessage(s);
             tsg.appendMessage("Your Inventory is full, if you want to replace an Item enter the #(1-3) now, if not enter no");
         }
     }
 
     public String getInventory()
     {
-        String s="---------------Inventory---------------";
+        String s="----------------------------Inventory----------------------------";
         s+="\n";
         s+="Item-1: ";
         if(items[0]!=null) {s+=items[0].getName()+"\n";}
@@ -190,14 +188,13 @@ public class Player
         s+="Weapon: ";
         if(weapon!=null) {s+=weapon.getName()+"\n";}
         else{s+="empty\n";}
-        s+="------------------------------------------";
 
         return s;
     }
 
     public String getStats()
     {
-        String s ="----------Stats----------";
+        String s ="------------------------------Stats-------------------------------";
         s+="\n";
         s+="Level: " + level;
         s+="\n";
@@ -208,8 +205,6 @@ public class Player
         s+="Damage Boost: " + damageBoost;
         s+="\n";
         s+="Defense Boost: " + defenseBoost;
-        s+="\n";
-        s+="-------------------------";
         return s;
     }
 
