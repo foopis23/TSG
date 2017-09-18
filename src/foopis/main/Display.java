@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 public class Display extends javax.swing.JPanel implements KeyListener {
 
     private javax.swing.JLabel mapLabel;
-    private javax.swing.JPanel panel;
+    private mapPanel panel;
     private javax.swing.JScrollPane displayScroll;
     private javax.swing.JScrollPane statScroll;
     private javax.swing.JTextArea displayArea;
@@ -58,13 +58,18 @@ public class Display extends javax.swing.JPanel implements KeyListener {
         statsArea.append(inventory);
     }
 
+    public void redrawMap()
+    {
+        panel.repaint();
+    }
+
     @SuppressWarnings("unchecked")
     private void initComponents() {
         displayScroll = new javax.swing.JScrollPane();
         displayArea = new javax.swing.JTextArea();
         input = new javax.swing.JTextField();
         input.addKeyListener(this);
-        panel = new javax.swing.JPanel();
+        panel = new mapPanel();
         mapLabel = new javax.swing.JLabel();
         statScroll = new javax.swing.JScrollPane();
         statsArea = new javax.swing.JTextArea();
@@ -155,6 +160,20 @@ public class Display extends javax.swing.JPanel implements KeyListener {
         {
             tsg.runAction(input.getText());
             input.setText(null);
+        }
+    }
+
+    class mapPanel extends JPanel
+    {
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            //Draw Graphics Here/////////////////////////
+            g.setColor(Color.WHITE);
+            g.fillRect(20,20,20,20);
+            g.drawString("OOF",50,50);
+            ////////////////////////////////////////////
         }
     }
 }

@@ -184,6 +184,7 @@ public class TSG{
         commandHandler.RunAction(input,this);
         player.run(this);
         display.displayStats(player.getStats(),player.getInventory());
+        display.redrawMap();
     }
 
     public int getHistorySize()
