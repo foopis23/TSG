@@ -1,5 +1,6 @@
 package foopis.main;
 
+import foopis.main.rooms.*;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
@@ -7,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
 
 public class Display extends javax.swing.JPanel implements KeyListener {
 
@@ -19,6 +21,8 @@ public class Display extends javax.swing.JPanel implements KeyListener {
     private javax.swing.JTextField input;
     private javax.swing.JFrame frame;
     private TSG tsg;
+    private LinkedList<Room> shownRooms;
+    private Room currentRoom;
 
     public Display(TSG tsg) {
         this.tsg = tsg;
@@ -58,6 +62,21 @@ public class Display extends javax.swing.JPanel implements KeyListener {
         statsArea.append(inventory);
     }
 
+    private void getShownRooms()
+    {
+        LinkedList<Room> allRooms = tsg.getRooms();
+        shownRooms  = new LinkedList<>();
+        for(Room room: allRooms)
+        {
+            if(room.hasEntered())
+            {
+                shownRooms.add(room);
+            }
+        }
+        
+        currentRoom = tsg.getCurrentRoom();
+    }
+    
     public void redrawMap()
     {
         panel.repaint();
@@ -165,15 +184,73 @@ public class Display extends javax.swing.JPanel implements KeyListener {
 
     class mapPanel extends JPanel
     {
+        int padding = 5;
+        Color mainColor = new Color(20, 200, 15);
+        Color highlight = new Color(60, 230, 50);
+        
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
+            getShownRooms();
+            
+            int height = this.getHeight() - padding * 2;
+            int width = this.getWidth() - padding * 2;
+            int maxX = 0;
+            int maxY = 0;
+            int minX = 0;
+            int minY = 0;
+            for(Room room: shownRooms)
+            {
+                int x = room.getX();
+                int y = room.getY();
+                maxX = Math.max(x, maxX);
+                maxY = Math.max(y, maxY);
+                minX = Math.min(x, minX);
+                minY = Math.min(y, minY);
+            }
 
-            //Draw Graphics Here/////////////////////////
-            g.setColor(Color.WHITE);
-            g.fillRect(20,20,20,20);
-            g.drawString("OOF",50,50);
-            ////////////////////////////////////////////
+            int horizDist = maxX - minX + 1;
+            int vertDist = maxY - minY + 1;
+            
+            int roomSize = Math.min(width / horizDist, height / vertDist);
+
+            for(Room room: shownRooms)
+            {
+                g.setColor(mainColor);
+                
+                int x = room.getX();
+                int y = room.getY();
+                float centerX = maxX - minX / 2;
+                float centerY = maxY - minY / 2;
+                
+                int roomX = (x - minX) * roomSize + width / 2 - roomSize * horizDist / 2 + padding;
+                int roomY = (y - minY) * roomSize + height / 2 - roomSize * vertDist / 2 + padding;
+                
+                g.fillRect(roomX + roomSize / 4, roomY + roomSize / 4, roomSize / 2 + 1, roomSize / 2 + 1);
+                
+                int[][] doorRects = {
+                        {roomSize * 3 / 7, 0, roomSize / 7 + 1, roomSize / 4 + 1},
+                        {roomSize * 3 / 4, roomSize * 3 / 7, roomSize / 4 + 1, roomSize / 7 + 1},
+                        {roomSize * 3 / 7, roomSize * 3 / 4, roomSize / 7 + 1, roomSize / 4 + 1},
+                        {0, roomSize * 3 / 7, roomSize / 4 + 1, roomSize / 7 + 1}
+                };
+
+                for(int i = 0; i < 4; i++)
+                {
+                    int[] rect = doorRects[i];
+                    if(room.isExit(i))
+                    {
+                        g.fillRect(roomX + rect[0], roomY + rect[1], rect[2], rect[3]);
+                    }
+                }
+
+                if(room == currentRoom)
+                {
+                    g.setColor(highlight);
+                }
+                
+                g.fillRect(roomX + roomSize * 3 / 8, roomY + roomSize * 3 / 8, roomSize / 4 + 1, roomSize / 4 + 1);
+            }
         }
     }
 }

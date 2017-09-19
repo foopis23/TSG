@@ -3,6 +3,7 @@ package foopis.main;
 import foopis.main.commands.*;
 import foopis.main.enemies.Thot;
 import foopis.main.items.*;
+import foopis.main.rooms.*;
 import foopis.main.items.weapons.*;
 
 import java.awt.*;
@@ -41,13 +42,14 @@ public class TSG{
 
     public TSG()
     {
-        display = new Display(this);
         random = new Random();
         debug = true;
+        initDungeon();
+        display = new Display(this);
+        display.redrawMap();
         initCommands();
         initItems();
         initWeapons();
-        initDungeon();
         initGame();
     }
 
@@ -240,5 +242,15 @@ public class TSG{
     public LinkedList<Item> getItems()
     {
         return items;
+    }
+    
+    public LinkedList<Room> getRooms()
+    {
+        return dungeonHandler.getRooms();
+    }
+    
+    public Room getCurrentRoom()
+    {
+        return dungeonHandler.getCurrentRoom();
     }
 }

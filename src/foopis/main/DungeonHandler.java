@@ -150,4 +150,9 @@ public class DungeonHandler
     {
         return currentRoom;
     }
+    
+    public LinkedList<Room> getRooms()
+    {
+        return rooms;
+    }
 }
