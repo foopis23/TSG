@@ -109,6 +109,7 @@ public class TSG{
         thot = null;
         dungeonHandler.createFloor(this);
         display.displayStats(player.getStats(),player.getInventory());
+        display.redrawMap();
     }
 
     public void encounter(double chance)
@@ -118,6 +119,7 @@ public class TSG{
         {
             thot = new Thot(player.getLevel(), this);
             inCombat = true;
+            appendMessage("-----------------------------------------------Battle-------------------------------------------------");
             appendMessage("You have been encountered by "+thot.getName());
         }
     }
@@ -128,6 +130,7 @@ public class TSG{
         player.gainExperience(xp,this);
         inCombat = false;
         thot = null;
+        appendMessage("------------------------------------------------------------------------------------------------------");
     }
 
     public Item getItemByName(String name)
