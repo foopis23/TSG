@@ -187,6 +187,7 @@ public class Display extends javax.swing.JPanel implements KeyListener {
         int padding = 5;
         Color mainColor = new Color(20, 200, 15);
         Color highlight = new Color(60, 230, 50);
+        Color ladderColor = new Color(110, 255, 90);
         
         @Override
         public void paintComponent(Graphics g) {
@@ -247,9 +248,14 @@ public class Display extends javax.swing.JPanel implements KeyListener {
                 if(room == currentRoom)
                 {
                     g.setColor(highlight);
+                    g.fillRect(roomX + roomSize * 3 / 8, roomY + roomSize * 3 / 8, roomSize / 4 + 1, roomSize / 4 + 1);
                 }
                 
-                g.fillRect(roomX + roomSize * 3 / 8, roomY + roomSize * 3 / 8, roomSize / 4 + 1, roomSize / 4 + 1);
+                if(room instanceof RoomLadder)
+                {
+                    g.setColor(ladderColor);
+                    g.fillRect(roomX + roomSize * 7 /16, roomY + roomSize * 7 /16, roomSize / 8 + 1, roomSize / 8 + 1);
+                }
             }
         }
     }
