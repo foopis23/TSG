@@ -73,7 +73,7 @@ public class Display extends javax.swing.JPanel implements KeyListener {
                 shownRooms.add(room);
             }
         }
-        
+
         currentRoom = tsg.getCurrentRoom();
     }
     
