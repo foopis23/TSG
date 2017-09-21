@@ -1,6 +1,7 @@
 package foopis.main;
 
 import foopis.main.commands.Command;
+import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
 
@@ -25,7 +26,7 @@ public class CommandHandler extends LinkedList<Command>
         {
             ran = weaponScrapping(input,tsg);
         }else{
-            ran = RunCommands(input,tsg);
+            ran = RunCommands(command,args,tsg);
         }
 
         if(combatMove)
@@ -46,10 +47,10 @@ public class CommandHandler extends LinkedList<Command>
         }
     }
 
-    public boolean RunCommands(String input, TSG tsg)
+    public boolean RunCommands(String command, LinkedList<String> args, TSG tsg)
     {
         for (Command c : this) {
-            if (c.run(input, tsg))
+            if (c.run(command,args, tsg))
             {
                 combatMove=c.isAttackMove();
                 return true;

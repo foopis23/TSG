@@ -12,9 +12,9 @@ public class CommandHelp extends Command {
         isAttackMove = false;
     }
 
-    public boolean run(String input, TSG tsg)
+    public boolean run(String command, LinkedList<String> args, TSG tsg)
     {
-        if(input.toLowerCase().contains(command.trim().toLowerCase()))
+        if(isThisCommand(command))
         {
             LinkedList<Command> commands = tsg.getCommands();
             StringBuilder s = new StringBuilder();

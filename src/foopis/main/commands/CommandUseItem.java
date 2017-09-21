@@ -3,6 +3,8 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
+import java.util.LinkedList;
+
 public class CommandUseItem extends Command
 {
     public CommandUseItem()
@@ -11,15 +13,17 @@ public class CommandUseItem extends Command
         isAttackMove = true;
     }
 
-    public boolean run(String input, TSG tsg) {
-        if(input.toLowerCase().contains(command.trim().toLowerCase()))
+    public boolean run(String command, LinkedList<String> args, TSG tsg) {
+        if(isThisCommand(command))
         {
-            if(input.contains("1"))
+            String itemNumber = args.get(0);
+
+            if(itemNumber.equals("1"))
             {
                 tsg.player.useItem(1,tsg);
-            }else if(input.contains("2")){
+            }else if(itemNumber.equals("2")){
                 tsg.player.useItem(2,tsg);
-            }else if(input.contains("3"))
+            }else if(itemNumber.equals("3"))
             {
                 tsg.player.useItem(3,tsg);
             }else{

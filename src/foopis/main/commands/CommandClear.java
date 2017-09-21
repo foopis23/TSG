@@ -2,6 +2,8 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
+import java.util.LinkedList;
+
 public class CommandClear extends Command {
 
     public CommandClear()
@@ -10,8 +12,9 @@ public class CommandClear extends Command {
         isAttackMove = false;
     }
 
-    public boolean run(String input, TSG tsg) {
-        if(input.toLowerCase().contains(command.trim().toLowerCase()))
+    public boolean run(String command, LinkedList<String> args, TSG tsg)
+    {
+        if(isThisCommand(command))
         {
             tsg.clearDisplay();
             return true;

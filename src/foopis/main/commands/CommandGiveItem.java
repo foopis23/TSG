@@ -2,6 +2,8 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
+import java.util.LinkedList;
+
 public class CommandGiveItem extends Command
 {
 
@@ -11,11 +13,11 @@ public class CommandGiveItem extends Command
         isAttackMove = false;
     }
 
-    public boolean run(String input, TSG tsg) {
+    public boolean run(String command, LinkedList<String> args, TSG tsg) {
 
-        if(input.toLowerCase().contains(command.trim().toLowerCase()))
+        if(isThisCommand(command))
         {
-                String s = input.substring(8,input.length());
+                String s = args.get(0);
                 System.out.println(s);
                 int i = Integer.parseInt(s);
                 if(i<tsg.getItems().size()) {
