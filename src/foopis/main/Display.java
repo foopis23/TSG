@@ -185,9 +185,9 @@ public class Display extends javax.swing.JPanel implements KeyListener {
     class mapPanel extends JPanel
     {
         int padding = 5;
-        Color mainColor = new Color(20, 200, 15);
-        Color highlight = new Color(60, 230, 50);
-        Color ladderColor = new Color(110, 255, 90);
+        Color mainColor = new Color(140, 140, 140);
+        Color highlight = new Color(180, 180, 180);
+        Color ladderColor = new Color(240, 240, 240);
         
         @Override
         public void paintComponent(Graphics g) {
