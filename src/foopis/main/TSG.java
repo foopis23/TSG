@@ -236,7 +236,6 @@ public class TSG{
 
     public static void main(String[] args)
     {
-        System.out.println("use 1 2 3".indexOf(" "));
         new TSG();
     }
 

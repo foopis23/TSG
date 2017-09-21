@@ -11,9 +11,9 @@ public class CommandHandler extends LinkedList<Command>
 
     public void RunAction(String input, TSG tsg)
     {
-        //System.out.println("Raw Input: "+input);
-        //String command = getCommand(input);
-        //LinkedList<String> args = getArguments(input);
+        System.out.println("Raw Input: "+input);
+        String command = getCommand(input);
+        LinkedList<String> args = getArguments(input);
 
         ran = false;
         combatMove = false;
@@ -115,27 +115,29 @@ public class CommandHandler extends LinkedList<Command>
     public LinkedList<String> getArguments(String input)
     {
         LinkedList<String> args = new LinkedList<>();
+        int[] spaceIndexs = {-1,-1,-1};
+
         int counter = 0;
-        for( int i=0; i<input.length(); i++ ) {
-            if( input.charAt(i) == ' ' ) {
+        for( int i=0; i<input.length(); i++ )
+        {
+            if( input.charAt(i) == ' ' )
+            {
+                spaceIndexs[counter] = i;
                 counter++;
+
+                if(counter <= spaceIndexs.length) {break;}
             }
         }
 
-        int startPoint = input.indexOf(" ")+1;
-        int endPoint = input.indexOf(" ", startPoint);
-        for(int l=0;l<counter;l++)
+        int startPoint = 0;
+        int endPoint = 0;
+        for(int i=0; i<spaceIndexs.length;i++)
         {
-            System.out.println(startPoint+", "+endPoint);
-            if(endPoint<input.length()&&startPoint<input.length()) {
-                args.add(input.substring(startPoint, endPoint));
-            }
-                startPoint = endPoint+1;
-                endPoint = input.indexOf(" ", startPoint);
-                if(endPoint==-1)
-                {
-                    endPoint=input.length();
-                }
+            if(spaceIndexs[i]!=-1) {startPoint = spaceIndexs[i]+1;}else{break;}
+
+            if(i+1<spaceIndexs.length&&spaceIndexs[i+1]!=-1){endPoint = spaceIndexs[i+1];}else{endPoint = input.length();}
+
+            args.add(input.substring(startPoint,endPoint));
         }
 
         System.out.println("Args: ");
