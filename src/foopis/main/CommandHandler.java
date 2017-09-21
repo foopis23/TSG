@@ -11,6 +11,10 @@ public class CommandHandler extends LinkedList<Command>
 
     public void RunAction(String input, TSG tsg)
     {
+        //System.out.println("Raw Input: "+input);
+        //String command = getCommand(input);
+        //LinkedList<String> args = getArguments(input);
+
         ran = false;
         combatMove = false;
 
@@ -45,7 +49,8 @@ public class CommandHandler extends LinkedList<Command>
     public boolean RunCommands(String input, TSG tsg)
     {
         for (Command c : this) {
-            if (c.run(input, tsg)) {
+            if (c.run(input, tsg))
+            {
                 combatMove=c.isAttackMove();
                 return true;
             }
@@ -97,5 +102,49 @@ public class CommandHandler extends LinkedList<Command>
             tsg.appendMessage("Your Inventory is full, if you want to replace an Item type the # now, if not type no");
             return true;
         }
+    }
+
+    public String getCommand(String input)
+    {
+        if (input.contains(" ")) {input = input.substring(0,input.indexOf(" "));}
+        System.out.println("Command: "+input);
+
+        return input;
+    }
+
+    public LinkedList<String> getArguments(String input)
+    {
+        LinkedList<String> args = new LinkedList<>();
+        int counter = 0;
+        for( int i=0; i<input.length(); i++ ) {
+            if( input.charAt(i) == ' ' ) {
+                counter++;
+            }
+        }
+
+        int startPoint = input.indexOf(" ")+1;
+        int endPoint = input.indexOf(" ", startPoint);
+        for(int l=0;l<counter;l++)
+        {
+            System.out.println(startPoint+", "+endPoint);
+            if(endPoint<input.length()&&startPoint<input.length()) {
+                args.add(input.substring(startPoint, endPoint));
+            }
+                startPoint = endPoint+1;
+                endPoint = input.indexOf(" ", startPoint);
+                if(endPoint==-1)
+                {
+                    endPoint=input.length();
+                }
+        }
+
+        System.out.println("Args: ");
+
+        for(String a: args)
+        {
+            System.out.println(a+"\n");
+        }
+
+        return args;
     }
 }

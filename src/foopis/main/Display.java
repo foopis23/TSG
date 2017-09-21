@@ -192,69 +192,65 @@ public class Display extends javax.swing.JPanel implements KeyListener {
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            getShownRooms();
-            
-            int height = this.getHeight() - padding * 2;
-            int width = this.getWidth() - padding * 2;
-            int maxX = 0;
-            int maxY = 0;
-            int minX = 0;
-            int minY = 0;
-            for(Room room: shownRooms)
-            {
-                int x = room.getX();
-                int y = room.getY();
-                maxX = Math.max(x, maxX);
-                maxY = Math.max(y, maxY);
-                minX = Math.min(x, minX);
-                minY = Math.min(y, minY);
-            }
+            if(tsg.running) {
+                getShownRooms();
 
-            int horizDist = maxX - minX + 1;
-            int vertDist = maxY - minY + 1;
-            
-            int roomSize = Math.min(width / horizDist, height / vertDist);
+                int height = this.getHeight() - padding * 2;
+                int width = this.getWidth() - padding * 2;
+                int maxX = 0;
+                int maxY = 0;
+                int minX = 0;
+                int minY = 0;
+                for (Room room : shownRooms) {
+                    int x = room.getX();
+                    int y = room.getY();
+                    maxX = Math.max(x, maxX);
+                    maxY = Math.max(y, maxY);
+                    minX = Math.min(x, minX);
+                    minY = Math.min(y, minY);
+                }
 
-            for(Room room: shownRooms)
-            {
-                g.setColor(mainColor);
-                
-                int x = room.getX();
-                int y = room.getY();
-                float centerX = maxX - minX / 2;
-                float centerY = maxY - minY / 2;
-                
-                int roomX = (x - minX) * roomSize + width / 2 - roomSize * horizDist / 2 + padding;
-                int roomY = (y - minY) * roomSize + height / 2 - roomSize * vertDist / 2 + padding;
-                
-                g.fillRect(roomX + roomSize / 4, roomY + roomSize / 4, roomSize / 2 + 1, roomSize / 2 + 1);
-                
-                int[][] doorRects = {
-                        {roomSize * 3 / 7, 0, roomSize / 7 + 1, roomSize / 4 + 1},
-                        {roomSize * 3 / 4, roomSize * 3 / 7, roomSize / 4 + 1, roomSize / 7 + 1},
-                        {roomSize * 3 / 7, roomSize * 3 / 4, roomSize / 7 + 1, roomSize / 4 + 1},
-                        {0, roomSize * 3 / 7, roomSize / 4 + 1, roomSize / 7 + 1}
-                };
+                int horizDist = maxX - minX + 1;
+                int vertDist = maxY - minY + 1;
 
-                for(int i = 0; i < 4; i++)
-                {
-                    int[] rect = doorRects[i];
-                    if(room.isExit(i))
-                    {
-                        g.fillRect(roomX + rect[0], roomY + rect[1], rect[2], rect[3]);
+                int roomSize = Math.min(width / horizDist, height / vertDist);
+
+                for (Room room : shownRooms) {
+                    g.setColor(mainColor);
+
+                    int x = room.getX();
+                    int y = room.getY();
+                    float centerX = maxX - minX / 2;
+                    float centerY = maxY - minY / 2;
+
+                    int roomX = (x - minX) * roomSize + width / 2 - roomSize * horizDist / 2 + padding;
+                    int roomY = (y - minY) * roomSize + height / 2 - roomSize * vertDist / 2 + padding;
+
+                    g.fillRect(roomX + roomSize / 4, roomY + roomSize / 4, roomSize / 2 + 1, roomSize / 2 + 1);
+
+                    int[][] doorRects = {
+                            {roomSize * 3 / 7, 0, roomSize / 7 + 1, roomSize / 4 + 1},
+                            {roomSize * 3 / 4, roomSize * 3 / 7, roomSize / 4 + 1, roomSize / 7 + 1},
+                            {roomSize * 3 / 7, roomSize * 3 / 4, roomSize / 7 + 1, roomSize / 4 + 1},
+                            {0, roomSize * 3 / 7, roomSize / 4 + 1, roomSize / 7 + 1}
+                    };
+
+                    for (int i = 0; i < 4; i++) {
+                        int[] rect = doorRects[i];
+                        if (room.isExit(i)) {
+                            g.fillRect(roomX + rect[0], roomY + rect[1], rect[2], rect[3]);
+                        }
                     }
-                }
 
-                if(room == currentRoom)
-                {
-                    g.setColor(highlight);
-                    g.fillRect(roomX + roomSize * 3 / 8, roomY + roomSize * 3 / 8, roomSize / 4 + 1, roomSize / 4 + 1);
-                }
-                
-                if(room instanceof RoomLadder)
-                {
-                    g.setColor(ladderColor);
-                    g.fillRect(roomX + roomSize * 7 /16, roomY + roomSize * 7 /16, roomSize / 8 + 1, roomSize / 8 + 1);
+                    if (room == currentRoom) {
+                        g.setColor(highlight);
+                        g.fillRect(roomX + roomSize * 3 / 8, roomY + roomSize * 3 / 8, roomSize / 4 + 1, roomSize / 4 + 1);
+                    }
+
+                    if (room instanceof RoomLadder) {
+                        g.setColor(ladderColor);
+                        g.fillRect(roomX + roomSize * 7 / 16, roomY + roomSize * 7 / 16, roomSize / 8 + 1, roomSize / 8 + 1);
+                    }
                 }
             }
         }

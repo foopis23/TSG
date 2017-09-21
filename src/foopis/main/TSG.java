@@ -25,6 +25,7 @@ public class TSG{
     //GameStates/////////////////////
     private boolean debug;
     public boolean inCombat;
+    public boolean running;
     /////////////////////////////////
 
     //GameSystems////////////////////
@@ -109,6 +110,7 @@ public class TSG{
         thot = null;
         dungeonHandler.createFloor(this);
         display.displayStats(player.getStats(),player.getInventory());
+        running = true;
         display.redrawMap();
     }
 
@@ -234,6 +236,7 @@ public class TSG{
 
     public static void main(String[] args)
     {
+        System.out.println("use 1 2 3".indexOf(" "));
         new TSG();
     }
 
