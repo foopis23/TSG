@@ -246,12 +246,13 @@ public class Player
 
     public void useItem(int i,TSG tsg)
     {
-        if(items.get(i-1)!=null) {
-            if (items.get(i-1).use(tsg)) {
-                items.remove(i-1);
+        if(i-1<inventorySize&&i-1<items.size()) {
+            if (items.get(i - 1).use(tsg))
+            {
+                items.remove(i - 1);
             }
         }else{
-            tsg.appendMessage("Item slot "+i+" is empty");
+            tsg.appendMessage("This item slot is empty");
         }
     }
 

@@ -21,6 +21,7 @@ public class TSG{
     public Player player;
 
     //GameStates/////////////////////
+    public boolean canEncounter;
     private boolean debug;
     public boolean inCombat;
     boolean running;
@@ -42,7 +43,8 @@ public class TSG{
     public TSG()
     {
         random = new Random();
-        debug = true;
+        debug = false;
+        canEncounter = true;
         initDungeon();
         display = new Display(this);
         display.redrawMap();
@@ -65,10 +67,6 @@ public class TSG{
         commandHandler.add(new CommandGo());
         commandHandler.add(new CommandRoomAction());
         commandHandler.add(new CommandLook());
-        if(debug)
-        {
-            commandHandler.add(new CommandGiveItem());
-        }
     }
 
     private void initItems()
@@ -112,15 +110,25 @@ public class TSG{
         display.redrawMap();
     }
 
+    public void enterDebug()
+    {
+        debug = true;
+
+        commandHandler.add(new CommandGiveItem());
+        commandHandler.add(new CommandEncounter());
+        commandHandler.add(new CommandToggleEncounter());
+    }
+
     public void encounter(double chance)
     {
-        int sampleSize = 1000;
-        if(random.nextInt(sampleSize-1)<=(sampleSize*chance))
-        {
-            thot = new Thot(player.getLevel(), this);
-            inCombat = true;
-            appendMessage("-----------------------------------------------Battle-------------------------------------------------");
-            appendMessage("You have been encountered by "+thot.getName());
+        if(canEncounter&&debug) {
+            int sampleSize = 1000;
+            if (random.nextInt(sampleSize - 1) <= (sampleSize * chance)) {
+                thot = new Thot(player.getLevel(), this);
+                inCombat = true;
+                appendMessage("-----------------------------------------------Battle-------------------------------------------------");
+                appendMessage("You have been encountered by " + thot.getName());
+            }
         }
     }
 

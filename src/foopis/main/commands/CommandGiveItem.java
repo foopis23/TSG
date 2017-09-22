@@ -1,6 +1,7 @@
 package foopis.main.commands;
 
 import foopis.main.TSG;
+import foopis.main.items.Item;
 
 import java.util.LinkedList;
 
@@ -17,16 +18,19 @@ public class CommandGiveItem extends Command
 
         if(isThisCommand(command))
         {
-                String s = args.get(0);
-                System.out.println(s);
-                int i = Integer.parseInt(s);
-                if(i<tsg.getItems().size()) {
-                    tsg.player.obtainItem(tsg.getItems().get(i), tsg);
-                    return true;
-                }else {
-                    tsg.appendMessage("Could not find Item ID");
-                    return true;
+            if(args.size()>0) {
+                String itemName = args.get(0);
+                Item item = tsg.getItemByName(itemName);
+                if(item!=null)
+                {
+                    tsg.player.obtainWeapon(item,tsg);
+                }else{
+                    tsg.appendMessage("[Debug]: Could not find Item!");
                 }
+            }else{
+                tsg.appendMessage("To use this command enter \""+command+" [Item Name]\"");
+            }
+            return true;
         }else{
             return false;
         }
