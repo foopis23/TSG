@@ -35,22 +35,39 @@ public class CommandGo extends Command
                 }
                 return true;
             } else {
-                tsg.appendMessage("You cannot use this command in combat!");
+                tsg.appendMessage("You can't use this command in combat!");
                 return true;
             }
-        } else if (command.toLowerCase().equals("n")) {
-            tsg.dungeonHandler.go(tsg, TSG.NORTH);
+        } else if (command.toLowerCase().equals("n"))
+        {
+            if (!tsg.inCombat) {
+                tsg.dungeonHandler.go(tsg, TSG.NORTH);
+            }else{
+                tsg.appendMessage("You can't use this command in combat!");
+            }
             return true;
 
         } else if (command.toLowerCase().equals("e")) {
-            tsg.dungeonHandler.go(tsg, TSG.EAST);
+            if (!tsg.inCombat) {
+                tsg.dungeonHandler.go(tsg, TSG.EAST);
+            }else{
+                tsg.appendMessage("You can't use this command in combat!");
+            }
             return true;
 
         } else if (command.toLowerCase().equals("s")) {
-            tsg.dungeonHandler.go(tsg, TSG.SOUTH);
+            if (!tsg.inCombat) {
+                tsg.dungeonHandler.go(tsg, TSG.SOUTH);
+            }else{
+                tsg.appendMessage("You can't use this command in combat!");
+            }
             return true;
         } else if (command.toLowerCase().equals("w")) {
-            tsg.dungeonHandler.go(tsg,TSG.WEST);
+            if (!tsg.inCombat) {
+                tsg.dungeonHandler.go(tsg, TSG.WEST);
+            }else{
+                tsg.appendMessage("You can't use this command in combat!");
+            }
             return true;
         } else {
             return false;

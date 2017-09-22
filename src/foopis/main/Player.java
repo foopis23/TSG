@@ -103,8 +103,9 @@ public class Player
 
     public String getInventory()
     {
-        String s="----------------------------Inventory----------------------------";
-        s+="\n";
+        String s="----------------------------Inventory----------------------------\n";
+        s+="Weapon: "+weapon.getName()+"\n";
+
         for(int i=0;i<inventorySize;i++)
         {
             if(i<items.size()){s+= (i+1) +") "+ items.get(i).getName() +"\n";}else{s+= (i+1) +") Empty\n";}
@@ -225,7 +226,7 @@ public class Player
     public void replaceWeapon()
     {
         this.weapon = this.obtainedWeapon;
-        this.obtainedItem = null;
+        this.obtainedWeapon = null;
     }
 
     public void replaceItem(int i)
@@ -262,10 +263,9 @@ public class Player
             Weapon w = (Weapon) item;
             obtainedWeapon = w;
             tsg.appendMessage("You have obtained "+w.getName());
+
             if(weapon!=null)
             {
-                String s=getInventory();
-                tsg.appendMessage(s);
                 tsg.appendMessage("You already have a weapon, if you would like to replace it enter yes, if not no");
             }else{
                 weapon = w;
