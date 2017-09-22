@@ -23,7 +23,7 @@ public class CommandGiveItem extends Command
                 Item item = tsg.getItemByName(itemName);
                 if(item!=null)
                 {
-                    tsg.player.obtainWeapon(item,tsg);
+                    tsg.player.obtainItem(item,tsg);
                 }else{
                     tsg.appendMessage("[Debug]: Could not find Item!");
                 }

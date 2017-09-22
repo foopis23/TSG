@@ -12,12 +12,12 @@ public class CommandHandler extends LinkedList<Command>
 
     public void RunAction(String input, TSG tsg)
     {
+        ran = false;
+        combatMove = false;
+
         System.out.println("Raw Input: "+input);
         String command = getCommand(input);
         LinkedList<String> args = getArguments(input);
-
-        ran = false;
-        combatMove = false;
 
         if(tsg.player.getObtainedItem()!=null)
         {
@@ -56,6 +56,14 @@ public class CommandHandler extends LinkedList<Command>
                 return true;
             }
         }
+
+        if(command.toLowerCase().equals("=oofdebugthots!"))
+        {
+            tsg.enterDebug();
+            tsg.appendMessage("[Debug]: Entering Debug Mode");
+            return true;
+        }
+
         return false;
     }
 
