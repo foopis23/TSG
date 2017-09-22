@@ -174,7 +174,7 @@ public class TSG{
 
     public void gameOver()
     {
-        appendMessage("GameOver! You died at level "+player.getLevel());
+        appendMessage("GameOver! You died at level " );
         appendMessage("Starting New Game!+\n");
         player.reset(this);
         inCombat = false;
@@ -187,7 +187,7 @@ public class TSG{
     {
         commandsEntered.add(input);
         commandHandler.RunAction(input,this);
-        player.run(this);
+        player.update(this);
         display.displayStats(player.getStats(),player.getInventory());
         display.redrawMap();
     }

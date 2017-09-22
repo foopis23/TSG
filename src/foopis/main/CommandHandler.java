@@ -21,10 +21,10 @@ public class CommandHandler extends LinkedList<Command>
 
         if(tsg.player.getObtainedItem()!=null)
         {
-            ran = itemScrapping(input,tsg);
+            ran = itemScrapping(command,tsg);
         }else if(tsg.player.getObtainedWeapon()!=null)
         {
-            ran = weaponScrapping(input,tsg);
+            ran = weaponScrapping(command,tsg);
         }else{
             ran = RunCommands(command,args,tsg);
         }
@@ -73,34 +73,27 @@ public class CommandHandler extends LinkedList<Command>
             return true;
         }else{
             tsg.appendMessage("That is not a valid command right now!");
-            tsg.appendMessage("You already have a weapon, if you would like to replace it enter yes, if not no");
             return true;
         }
     }
 
 
-    public boolean itemScrapping(String input, TSG tsg)
+    public boolean itemScrapping(String command, TSG tsg)
     {
-        if (input.toLowerCase().contains("no"))
+        if (command.toLowerCase().equals("no"))
         {
             tsg.appendMessage("You scrapped the Item");
             tsg.player.scarpObtainedItem();
             return true;
-        } else if (input.toLowerCase().contains("1")) {
-            tsg.appendMessage(tsg.player.getItems(1).getName() + " has been scrapped for " + tsg.player.getObtainedItem().getName());
-            tsg.player.replaceItem(1);
-            return true;
-        } else if (input.toLowerCase().contains("2")) {
-            tsg.appendMessage(tsg.player.getItems(2).getName() + " has been scrapped for " + tsg.player.getObtainedItem().getName());
-            tsg.player.replaceItem(2);
-            return true;
-        } else if (input.toLowerCase().contains("3")) {
-            tsg.appendMessage(tsg.player.getItems(3).getName() + " has been scrapped for " + tsg.player.getObtainedItem().getName());
-            tsg.player.replaceItem(3);
-            return true;
-        } else {
-            tsg.appendMessage("That is not a valid command right now!");
-            tsg.appendMessage("Your Inventory is full, if you want to replace an Item type the # now, if not type no");
+        }else{
+            try{
+                int i = Integer.parseInt(command);
+                tsg.player.replaceItem(i);
+            }catch (Exception e)
+            {
+                tsg.appendMessage("That is not a valid command right now!");
+                System.err.println(e);
+            }
             return true;
         }
     }
