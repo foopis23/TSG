@@ -3,27 +3,29 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
+import java.util.LinkedList;
+
 public class CommandUseItem extends Command
 {
     public CommandUseItem()
     {
-        command = "UseItem";
+        command = "Use";
         isAttackMove = true;
     }
 
-    public boolean run(String input, TSG tsg) {
-        if(input.toLowerCase().contains(command.trim().toLowerCase()))
+    public boolean run(String command, LinkedList<String> args, TSG tsg) {
+        if(isThisCommand(command))
         {
-            if(input.contains("1"))
-            {
-                tsg.player.useItem(1,tsg);
-            }else if(input.contains("2")){
-                tsg.player.useItem(2,tsg);
-            }else if(input.contains("3"))
-            {
-                tsg.player.useItem(3,tsg);
+            if(args.size()>0) {
+                String itemString = args.get(0);
+                int itemNumber = Integer.parseInt(itemString);
+                if(itemNumber<=tsg.player.getInventorySize()) {
+                    tsg.player.useItem(itemNumber, tsg);
+                }else{
+                    tsg.appendMessage("You can only use an item between 1 and "+tsg.player.getInventorySize());
+                }
             }else{
-                tsg.appendMessage("To use an item, enter 'UseItem {#1-3}'");
+                tsg.appendMessage("Please enter \""+command+" [Inventory Slot Number]\" to use this command");
             }
             return true;
         }else return false;

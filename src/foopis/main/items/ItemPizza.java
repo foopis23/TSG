@@ -16,15 +16,11 @@ public class ItemPizza extends Item {
         int healthBoost = 20;
         if(i<100*chanceOfBoneless)
         {
-            int oldHealth = tsg.player.getHealth();
-            tsg.player.heal(healthBoost);
             tsg.appendMessage("You consumed that BONELESS Pizza");
-            tsg.appendMessage("Health: "+oldHealth+" --(+"+healthBoost+ ")--> "+tsg.player.getHealth());
+            tsg.player.heal(tsg,healthBoost);
         }else{
             tsg.appendMessage("THERE ARE BONES IN THIS PIZZA!");
-            int oldHealth = tsg.player.getHealth();
-            tsg.player.takeDamage(healthBoost/2);
-            tsg.appendMessage("Health: "+oldHealth+" --(-"+healthBoost/2+ ")--> "+tsg.player.getHealth());
+            tsg.player.takeDamage(tsg,healthBoost/2);
         }
         return true;
     }

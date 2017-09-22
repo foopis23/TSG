@@ -45,8 +45,7 @@ public class Thot extends Enemy
             if (tsg.inCombat) {
                 if(generator.nextInt(100)<100*hitChance)
                 {
-                    tsg.appendMessage(name + " attacked and did " + damage + " damage");
-                    tsg.player.takeDamage(damage);
+                    tsg.player.takeDamage(tsg,damage);
                 }else{
                     tsg.appendMessage(name+ " attacked, but its missed");
                 }

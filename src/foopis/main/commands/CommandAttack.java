@@ -2,6 +2,8 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
+import java.util.LinkedList;
+
 public class CommandAttack extends Command
 {
     public CommandAttack()
@@ -10,9 +12,9 @@ public class CommandAttack extends Command
         isAttackMove = true;
     }
 
-    public boolean run(String input, TSG tsg)
+    public boolean run(String command, LinkedList<String> args, TSG tsg)
     {
-        if(input.toLowerCase().contains(command.toLowerCase().trim()))
+        if(isThisCommand(command))
         {
             if(tsg.inCombat) {
                     tsg.player.attack(tsg);

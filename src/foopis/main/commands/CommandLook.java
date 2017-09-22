@@ -2,6 +2,8 @@ package foopis.main.commands;
 
 import foopis.main.TSG;
 
+import java.util.LinkedList;
+
 public class CommandLook extends Command
 {
 
@@ -11,8 +13,8 @@ public class CommandLook extends Command
         isAttackMove = false;
     }
 
-    public boolean run(String input, TSG tsg) {
-        if(input.toLowerCase().contains(command.toLowerCase().trim()))
+    public boolean run(String command, LinkedList<String> args, TSG tsg) {
+        if(isThisCommand(command))
         {
             if(!tsg.inCombat)
             {

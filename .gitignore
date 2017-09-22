@@ -7,3 +7,5 @@ TSG.iml
 .idea/workspace.xml
 *.class
 *.MF
+out/production/TSG/.directory
+out/production/TSG/foopis/main/.directory

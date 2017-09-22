@@ -3,11 +3,13 @@ package foopis.main;
 import foopis.main.items.Item;
 import foopis.main.items.weapons.Weapon;
 
+import java.util.LinkedList;
+
 public class Player
 {
     //Health
     private int health;
-    private int healthLimit;
+    private int maximumHealth;
 
     //Buffs
     private int damageBoost;
@@ -19,82 +21,62 @@ public class Player
     private int level;
 
     //Inventory Stuff
-    private Item[] items;
+    private LinkedList<Item> items;
     private Weapon weapon;
     private Item obtainedItem;
     private Weapon obtainedWeapon;
+    private int inventorySize;
 
     public Player(TSG tsg)
     {
-        items = new Item[3];
+        items = new LinkedList<>();
         reset(tsg);
     }
 
     public void reset(TSG tsg)
     {
         health = 100;
-        healthLimit = health;
+        maximumHealth = health;
         damageBoost = 0;
         defenseBoost = 0;
         xp=0;
         xpToLevel = 100;
         level = 1;
-        items[0] = tsg.getItemByName("Ramen");
-        items[1] = null;
-        items[2] = null;
+        items.clear();
+        items.add(tsg.getItemByName("Ramen"));
         weapon = tsg.getWeaponByName("Normie Sword");
         obtainedItem = null;
         obtainedWeapon = null;
+        inventorySize = 5;
     }
 
-    public void run(TSG tsg)
+    public void update(TSG tsg)
     {
+        if(items.size()>inventorySize)
+        {//Check for inventory size to big oof
+            for(int i = inventorySize;i<items.size();i++)
+            {
+                tsg.appendMessage("Inventory size to thicc, report to developer if you see this message");
+                items.remove(i);
+            }
+        }
+
+        if(health>maximumHealth)
+        {//Check More Health Than Maximum
+            health = health -(health-maximumHealth);
+        }
+
         if(health<=0)
-        {
+        {//Health is zero, meaning player died
             tsg.gameOver();
         }
 
         if(xp>=xpToLevel)
-        {
+        {//Checking xp to make sure player levels up
             levelUp(tsg);
         }
     }
 
-    public void levelUp(TSG tsg)
-    {
-        tsg.appendMessage("LEVEL UP!");
-        tsg.appendMessage("Level: "+this.level+" --(+1)--> "+(this.level+1));
-        level++;
-        this.xp -= xpToLevel;
-        xpToLevel+=50;
-        healthLimit+=10;
-        health+=10;
-
-        if(health>healthLimit)
-        {
-            health=health-(health-healthLimit);
-        }
-    }
-
-    public void takeDamage(int damage)
-    {
-        health-=(damage-defenseBoost);
-    }
-
-    public void heal(int health)
-    {
-        this.health+=health;
-        if(health>healthLimit)
-        {
-            this.health -= (this.health-healthLimit);
-        }
-    }
-
-    public void gainExperience(int xp, TSG tsg)
-    {
-        tsg.appendMessage("XP: "+this.xp+" --(+"+xp+")--> "+(this.xp+xp));
-        this.xp+=xp;
-    }
 
     public void attack(TSG tsg)
     {
@@ -119,14 +101,159 @@ public class Player
         }
     }
 
+    public String getInventory()
+    {
+        String s="----------------------------Inventory----------------------------\n";
+        s+="Weapon: "+weapon.getName()+"\n";
+
+        for(int i=0;i<inventorySize;i++)
+        {
+            if(i<items.size()){s+= (i+1) +") "+ items.get(i).getName() +"\n";}else{s+= (i+1) +") Empty\n";}
+        }
+        return s;
+    }
+
+    public String getStats()
+    {
+        String s ="------------------------------Stats-------------------------------";
+        s+="\n";
+        s+="Level: " + level;
+        s+="\n";
+        s+="Xp: " + xp + "/" + xpToLevel;
+        s+="\n";
+        s+="Health: " + health + "/" + maximumHealth;
+        s+="\n";
+        s+="Damage Boost: " + damageBoost;
+        s+="\n";
+        s+="Defense Boost: " + defenseBoost;
+        return s;
+    }
+
+    //Stats Modifiers/////////////////////////////////////////
+    public int takeDamage(TSG tsg, int damage)
+    {
+        tsg.appendMessage("You took "+damage+" damage");
+        health-=(damage-defenseBoost);
+        return health;
+    }
+
+    public int heal(TSG tsg,int health)
+    {
+        tsg.appendMessage("You gain "+health+" health");
+        this.health+=health;
+        return health;
+    }
+
+    public void levelUp(TSG tsg)
+    {
+        tsg.appendMessage("LEVEL UP!");
+        tsg.appendMessage("Level: "+this.level+" --(+1)--> "+(this.level+1));
+        level++;
+        this.xp -= xpToLevel;
+        xpToLevel+=50;
+        maximumHealth+=5;
+        health+=5;
+    }
+
+    public int gainExperience(int xp, TSG tsg)
+    {
+        tsg.appendMessage("You've gained "+ xp +"xp");
+        this.xp+=xp;
+        return xp;
+    }
+
+    public int raiseMaximumHealth(TSG tsg, int difference)
+    {
+        tsg.appendMessage("You will to live has risen "+difference);
+        maximumHealth+=difference;
+        return maximumHealth;
+    }
+
+    public int lowerMaximumHealth(TSG tsg, int difference)
+    {
+        tsg.appendMessage("Your will to live has dropped "+difference);
+        maximumHealth-=difference;
+        return maximumHealth;
+    }
+
+    public int raiseDefense(TSG tsg, int difference)
+    {
+        tsg.appendMessage("Your Defense has risen "+difference);
+        defenseBoost+=difference;
+        return defenseBoost;
+    }
+
+    public int lowerDefense(TSG tsg, int differnece)
+    {
+        tsg.appendMessage("Your defense has dropped "+differnece);
+        defenseBoost-=differnece;
+        return defenseBoost;
+    }
+
+    public int raiseDamage(TSG tsg, int difference)
+    {
+        tsg.appendMessage("Your damage has risen "+difference);
+        damageBoost+=difference;
+        return damageBoost;
+    }
+
+    public int dropDamage(TSG tsg, int difference)
+    {
+        tsg.appendMessage("Your damage has dropped "+difference);
+        damageBoost-=difference;
+        return damageBoost;
+    }
+
+    public int raiseInventorySize(TSG tsg, int difference)
+    {
+        tsg.appendMessage("Your inventory size has increased "+difference+" slots");
+        inventorySize+=difference;
+        return inventorySize;
+    }
+    //Stats Modifiers/////////////////////////////////////////
+
+    //Item Stuff/////////////////////////////////////////////
+    public Item getObtainedItem()
+    {
+        return obtainedItem;
+    }
+
+    public Item getObtainedWeapon()
+    {
+        return obtainedWeapon;
+    }
+
+    public void replaceWeapon()
+    {
+        this.weapon = this.obtainedWeapon;
+        this.obtainedWeapon = null;
+    }
+
+    public void replaceItem(int i)
+    {
+        items.set(i,obtainedItem);
+        obtainedItem = null;
+    }
+
+    public void scrapObtainedWeapon()
+    {
+        obtainedWeapon = null;
+    }
+
+    public void scarpObtainedItem()
+    {
+        obtainedItem=null;
+    }
+
     public void useItem(int i,TSG tsg)
     {
-        if(items[i-1]!=null) {
-            if (items[i - 1].use(tsg)) {
-                items[i - 1] = null;
+        if(i-1<inventorySize&&i-1<items.size()) {
+            if (items.get(i - 1).use(tsg))
+            {
+                items.remove(i - 1);
             }
         }else{
-            tsg.appendMessage("Item slot "+i+" is empty");
+            tsg.appendMessage("This item slot is empty");
         }
     }
 
@@ -136,10 +263,9 @@ public class Player
             Weapon w = (Weapon) item;
             obtainedWeapon = w;
             tsg.appendMessage("You have obtained "+w.getName());
+
             if(weapon!=null)
             {
-                String s=getInventory();
-                tsg.appendMessage(s);
                 tsg.appendMessage("You already have a weapon, if you would like to replace it enter yes, if not no");
             }else{
                 weapon = w;
@@ -155,138 +281,25 @@ public class Player
     public void obtainItem(Item item, TSG tsg) {
         tsg.appendMessage("You have obtained " + item.getName());
         obtainedItem = item;
-        if (items[0] == null) {
-            items[0] = item;
-            obtainedItem = null;
-        } else if (items[1] == null) {
-            items[1] = item;
-            obtainedItem = null;
-        } else if (items[2] == null) {
-            items[2] = item;
-            obtainedItem = null;
-        } else {
-            String s = getInventory();
-            tsg.appendMessage(s);
-            tsg.appendMessage("Your Inventory is full, if you want to replace an Item enter the #(1-3) now, if not enter no");
-        }
-    }
-
-    public String getInventory()
-    {
-        String s="---------------Inventory---------------";
-        s+="\n";
-        s+="Item-1: ";
-        if(items[0]!=null) {s+=items[0].getName()+"\n";}
-        else{s+="empty \n";}
-
-        s+="Item-2: ";
-        if(items[1]!=null) {s+=items[1].getName()+"\n";}
-        else{s+="empty\n";}
-
-        s+="Item-3: ";
-        if(items[2]!=null) {s+=items[2].getName()+"\n";}
-        else{s+="empty\n";}
-
-        s+="Weapon: ";
-        if(weapon!=null) {s+=weapon.getName()+"\n";}
-        else{s+="empty\n";}
-        s+="------------------------------------------";
-
-        return s;
-    }
-
-    public String getStats()
-    {
-        String s ="----------Stats----------";
-        s+="\n";
-        s+="Level: " + level;
-        s+="\n";
-        s+="Xp: " + xp + "/" + xpToLevel;
-        s+="\n";
-        s+="Health: " + health + "/" + healthLimit;
-        s+="\n";
-        s+="Damage Boost: " + damageBoost;
-        s+="\n";
-        s+="Defense Boost: " + defenseBoost;
-        s+="\n";
-        s+="-------------------------";
-        return s;
-    }
-
-    public Item getObtainedItem()
-    {
-        return obtainedItem;
-    }
-
-    public Item getObtainedWeapon()
-    {
-        return obtainedWeapon;
-    }
-
-    public void replaceWeapon()
-    {
-        this.weapon = this.obtainedWeapon;
-        this.obtainedItem = null;
-    }
-
-    public void scrapObtainedWeapon()
-    {
-        obtainedWeapon = null;
-    }
-
-    public void replaceItem(int i)
-    {
-        items[i-1] = obtainedItem;
-        obtainedItem = null;
-    }
-
-    public void scarpObtainedItem()
-    {
-        obtainedItem=null;
-    }
-
-    public void setDamageBoost(int damageBoost)
-    {
-        this.damageBoost = damageBoost;
-    }
-
-    public void setDefenseBoost(int defenseBoost)
-    {
-        this.defenseBoost = defenseBoost;
-    }
-
-    public void setMaxHealth(int maxHealth)
-    {
-        healthLimit = maxHealth;
-        if(health<healthLimit)
+        if(items.size()<inventorySize)
         {
-            health-= (health-healthLimit);
+            items.add(obtainedItem);
+            obtainedItem = null;
+        }else{
+            tsg.appendMessage("You inventory is filled, If you would like to replace it enter a number between 1 and "+inventorySize+", if not enter no");
         }
     }
+    //Item Stuff/////////////////////////////////////////////
 
-    public int getLevel()
-    {
-        return level;
-    }
-
-    public Item getItems(int i)
-    {
-        return items[i-1];
-    }
-
-    public Item getWeapon()
-    {
-        return weapon;
-    }
-
+    //Getters////////////////////////////////////////////////
     public int getHealth()
     {
         return health;
     }
 
-    public int getHealthLimit()
+    public int getMaximumHealth()
     {
-        return healthLimit;
+        return maximumHealth;
     }
 
     public int getDamageBoost()
@@ -298,4 +311,35 @@ public class Player
     {
         return defenseBoost;
     }
+
+    public int getXp()
+    {
+        return xp;
+    }
+
+    public int getXpToLevel()
+    {
+        return xpToLevel;
+    }
+
+    public int getLevel()
+    {
+        return level;
+    }
+
+    public LinkedList<Item> getItems()
+    {
+        return items;
+    }
+
+    public Weapon getWeapon()
+    {
+        return weapon;
+    }
+
+    public int getInventorySize()
+    {
+        return inventorySize;
+    }
+    //Getters////////////////////////////////////////////////
 }

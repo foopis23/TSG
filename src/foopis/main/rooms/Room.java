@@ -58,6 +58,11 @@ public class Room
         return name;
     }
     
+    public boolean hasEntered()
+    {
+        return hasEntered;
+    }
+    
     public int getNumExits()
     {
         int num = 0;

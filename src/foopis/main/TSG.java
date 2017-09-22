@@ -3,6 +3,7 @@ package foopis.main;
 import foopis.main.commands.*;
 import foopis.main.enemies.Thot;
 import foopis.main.items.*;
+import foopis.main.rooms.*;
 import foopis.main.items.weapons.*;
 
 import java.awt.*;
@@ -14,16 +15,16 @@ public class TSG{
     public static final int EAST = 1;
     public static final int SOUTH = 2;
     public static final int WEST = 3;
-    public static final String TITLE = "TSG";
-    public static final String VERSION = "v3.0 Alpha";
 
     public Thot thot;
     public DungeonHandler dungeonHandler;
     public Player player;
 
     //GameStates/////////////////////
+    public boolean canEncounter;
     private boolean debug;
     public boolean inCombat;
+    boolean running;
     /////////////////////////////////
 
     //GameSystems////////////////////
@@ -41,13 +42,15 @@ public class TSG{
 
     public TSG()
     {
-        display = new Display(this);
         random = new Random();
-        debug = true;
+        debug = false;
+        canEncounter = true;
+        initDungeon();
+        display = new Display(this);
+        display.redrawMap();
         initCommands();
         initItems();
         initWeapons();
-        initDungeon();
         initGame();
     }
 
@@ -60,16 +63,10 @@ public class TSG{
         commandHandler.add(new CommandClear());
         commandHandler.add(new CommandComicSans());
         commandHandler.add(new CommandUseItem());
-        commandHandler.add(new CommandInventory());
         commandHandler.add(new CommandAttack());
         commandHandler.add(new CommandGo());
         commandHandler.add(new CommandRoomAction());
         commandHandler.add(new CommandLook());
-        commandHandler.add(new CommandStats());
-        if(debug)
-        {
-            commandHandler.add(new CommandGiveItem());
-        }
     }
 
     private void initItems()
@@ -101,23 +98,37 @@ public class TSG{
         dungeonHandler = new DungeonHandler();
     }
 
-    public void initGame()
+    private void initGame()
     {
         player = new Player(this);
         inCombat = false;
         hasText = false;
         thot = null;
         dungeonHandler.createFloor(this);
+        display.displayStats(player.getStats(),player.getInventory());
+        running = true;
+        display.redrawMap();
+    }
+
+    public void enterDebug()
+    {
+        debug = true;
+
+        commandHandler.add(new CommandGiveItem());
+        commandHandler.add(new CommandEncounter());
+        commandHandler.add(new CommandToggleEncounter());
     }
 
     public void encounter(double chance)
     {
-        int sampleSize = 1000;
-        if(random.nextInt(sampleSize-1)<=(sampleSize*chance))
-        {
-            thot = new Thot(player.getLevel(), this);
-            inCombat = true;
-            appendMessage("You have been encountered by "+thot.getName());
+        if(canEncounter) {
+            int sampleSize = 1000;
+            if (random.nextInt(sampleSize - 1) <= (sampleSize * chance)) {
+                thot = new Thot(player.getLevel(), this);
+                inCombat = true;
+                appendMessage("-----------------------------------------------Battle-------------------------------------------------");
+                appendMessage("You have been encountered by " + thot.getName());
+            }
         }
     }
 
@@ -127,6 +138,7 @@ public class TSG{
         player.gainExperience(xp,this);
         inCombat = false;
         thot = null;
+        appendMessage("------------------------------------------------------------------------------------------------------");
     }
 
     public Item getItemByName(String name)
@@ -158,7 +170,7 @@ public class TSG{
         double chanceOfItem = .65;
         int i= random.nextInt(99);
 
-        if(chanceOfItem<(99*chanceOfItem))
+        if(i<(99*chanceOfItem))
         {
             i = random.nextInt(items.size()-1);
             player.obtainItem(items.get(i), this);
@@ -170,7 +182,7 @@ public class TSG{
 
     public void gameOver()
     {
-        appendMessage("GameOver! You died at level "+player.getLevel());
+        appendMessage("GameOver! You died at level " );
         appendMessage("Starting New Game!+\n");
         player.reset(this);
         inCombat = false;
@@ -183,7 +195,9 @@ public class TSG{
     {
         commandsEntered.add(input);
         commandHandler.RunAction(input,this);
-        player.run(this);
+        player.update(this);
+        display.displayStats(player.getStats(),player.getInventory());
+        display.redrawMap();
     }
 
     public int getHistorySize()
@@ -217,7 +231,7 @@ public class TSG{
 
     public void clearDisplay()
     {
-        display.setText(null);
+        display.clearDisplay();
         hasText=false;
     }
 
@@ -239,5 +253,15 @@ public class TSG{
     public LinkedList<Item> getItems()
     {
         return items;
+    }
+    
+    public LinkedList<Room> getRooms()
+    {
+        return dungeonHandler.getRooms();
+    }
+    
+    public Room getCurrentRoom()
+    {
+        return dungeonHandler.getCurrentRoom();
     }
 }
