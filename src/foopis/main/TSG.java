@@ -121,7 +121,7 @@ public class TSG{
 
     public void encounter(double chance)
     {
-        if(canEncounter&&debug) {
+        if(canEncounter&&!debug) {
             int sampleSize = 1000;
             if (random.nextInt(sampleSize - 1) <= (sampleSize * chance)) {
                 thot = new Thot(player.getLevel(), this);
