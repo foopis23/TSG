@@ -23,11 +23,13 @@ public class Display extends javax.swing.JPanel implements KeyListener {
     private TSG tsg;
     private LinkedList<Room> shownRooms;
     private Room currentRoom;
+    private String TITLE = "TSG";
+    private static final String VERSION = "v3.2 Alpha";
 
     public Display(TSG tsg) {
         this.tsg = tsg;
         initComponents();
-        frame = new JFrame(TSG.TITLE+TSG.VERSION);
+        frame = new JFrame(TITLE+VERSION);
         frame.add(this);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

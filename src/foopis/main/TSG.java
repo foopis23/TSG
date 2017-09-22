@@ -15,8 +15,6 @@ public class TSG{
     public static final int EAST = 1;
     public static final int SOUTH = 2;
     public static final int WEST = 3;
-    public static final String TITLE = "TSG";
-    public static final String VERSION = "v3.1 Alpha";
 
     public Thot thot;
     public DungeonHandler dungeonHandler;
@@ -25,7 +23,7 @@ public class TSG{
     //GameStates/////////////////////
     private boolean debug;
     public boolean inCombat;
-    public boolean running;
+    boolean running;
     /////////////////////////////////
 
     //GameSystems////////////////////
@@ -66,7 +64,7 @@ public class TSG{
         commandHandler.add(new CommandAttack());
         commandHandler.add(new CommandGo());
         commandHandler.add(new CommandRoomAction());
-        commandHandler.add(new CommandLook());;
+        commandHandler.add(new CommandLook());
         if(debug)
         {
             commandHandler.add(new CommandGiveItem());
@@ -102,7 +100,7 @@ public class TSG{
         dungeonHandler = new DungeonHandler();
     }
 
-    public void initGame()
+    private void initGame()
     {
         player = new Player(this);
         inCombat = false;
@@ -164,7 +162,7 @@ public class TSG{
         double chanceOfItem = .65;
         int i= random.nextInt(99);
 
-        if(chanceOfItem<(99*chanceOfItem))
+        if(i<(99*chanceOfItem))
         {
             i = random.nextInt(items.size()-1);
             player.obtainItem(items.get(i), this);
