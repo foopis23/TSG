@@ -6,11 +6,14 @@ import foopis.main.items.*;
 import foopis.main.rooms.*;
 import foopis.main.items.weapons.*;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class TSG{
+public class TSG implements Runnable{
     public static final int NORTH = 0;
     public static final int EAST = 1;
     public static final int SOUTH = 2;
@@ -29,6 +32,8 @@ public class TSG{
 
     //GameSystems////////////////////
     private Display display;
+    MusicPlayer mp;
+    Thread musicThread;
     public Random random;
     private boolean hasText;
     /////////////////////////////////
@@ -48,6 +53,8 @@ public class TSG{
         initDungeon();
         display = new Display(this);
         display.redrawMap();
+        mp = new MusicPlayer();
+        musicThread = new Thread(this);
         initCommands();
         initItems();
         initWeapons();
@@ -108,6 +115,9 @@ public class TSG{
         display.displayStats(player.getStats(),player.getInventory());
         running = true;
         display.redrawMap();
+        musicThread.start();
+        mp.setSong("I_Dream_Of_Slaying_Thots_Intro","I_Dream_Of_Slaying_Thots_Loop");
+        mp.playSong();
     }
 
     public void enterDebug()
@@ -263,5 +273,17 @@ public class TSG{
     public Room getCurrentRoom()
     {
         return dungeonHandler.getCurrentRoom();
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            mp.update();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
