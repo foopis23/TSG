@@ -10,6 +10,7 @@ public class MusicPlayer
     private boolean hasNonLoop;
     private boolean hasLoop;
     private boolean nonLoopPlaying;
+    private boolean musicStarted;
 
     public MusicPlayer()
     {
