@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
 import java.util.LinkedList;
 
 public class Display extends javax.swing.JPanel implements KeyListener {
@@ -30,6 +31,9 @@ public class Display extends javax.swing.JPanel implements KeyListener {
         this.tsg = tsg;
         initComponents();
         frame = new JFrame(TITLE+VERSION);
+        URL iconURL = getClass().getResource("/resources/icon.png");
+        ImageIcon icon = new ImageIcon(iconURL);
+        frame.setIconImage(icon.getImage());
         frame.add(this);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

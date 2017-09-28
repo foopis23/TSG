@@ -6,11 +6,15 @@ import foopis.main.items.*;
 import foopis.main.rooms.*;
 import foopis.main.items.weapons.*;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class TSG{
+public class TSG
+{
     public static final int NORTH = 0;
     public static final int EAST = 1;
     public static final int SOUTH = 2;
@@ -264,4 +268,5 @@ public class TSG{
     {
         return dungeonHandler.getCurrentRoom();
     }
+
 }

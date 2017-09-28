@@ -19,6 +19,11 @@ public class Player
     private int xp;
     private int xpToLevel;
     private int level;
+    private int intelligenceLevel;
+    private int strengthLevel;
+    private int luckLevel;
+    private int healthLevel;
+    private int statPoints;
 
     //Inventory Stuff
     private LinkedList<Item> items;
@@ -42,6 +47,11 @@ public class Player
         xp=0;
         xpToLevel = 100;
         level = 1;
+        intelligenceLevel = 0;
+        strengthLevel = 0;
+        luckLevel = 0;
+        healthLevel = 0;
+        statPoints = 0;
         items.clear();
         items.add(tsg.getItemByName("Ramen"));
         weapon = tsg.getWeaponByName("Normie Sword");
@@ -147,17 +157,15 @@ public class Player
     public void levelUp(TSG tsg)
     {
         tsg.appendMessage("LEVEL UP!");
-        tsg.appendMessage("Level: "+this.level+" --(+1)--> "+(this.level+1));
+
         level++;
         this.xp -= xpToLevel;
         xpToLevel+=50;
-        maximumHealth+=5;
-        health+=5;
     }
 
     public int gainExperience(int xp, TSG tsg)
     {
-        tsg.appendMessage("You've gained "+ xp +"xp");
+        tsg.appendMessage("You gained "+ xp +"xp");
         this.xp+=xp;
         return xp;
     }
@@ -231,7 +239,7 @@ public class Player
 
     public void replaceItem(int i)
     {
-        items.set(i,obtainedItem);
+        items.set(i-1,obtainedItem);
         obtainedItem = null;
     }
 
@@ -320,6 +328,11 @@ public class Player
     public int getXpToLevel()
     {
         return xpToLevel;
+    }
+
+    public int getStatPoints()
+    {
+        return statPoints;
     }
 
     public int getLevel()
