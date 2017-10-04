@@ -4,26 +4,32 @@ import foopis.main.items.Item;
 import foopis.main.items.weapons.Weapon;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Player
 {
+    Random random;
+
     //Health
     private int health;
     private int maximumHealth;
 
     //Buffs
-    private int damageBoost;
-    private int defenseBoost;
+    private double damageBoost;
+    private double defenseBoost;
 
     //Level Stuff
     private int xp;
     private int xpToLevel;
     private int level;
+    private int mana;
+    private int maximumMana;
     private int intelligenceLevel;
     private int strengthLevel;
     private int luckLevel;
     private int healthLevel;
     private int statPoints;
+    private int floors;
 
     //Inventory Stuff
     private LinkedList<Item> items;
@@ -32,14 +38,26 @@ public class Player
     private Weapon obtainedWeapon;
     private int inventorySize;
 
-    public Player(TSG tsg)
+    //Skills
+    private boolean dialogue;
+    private boolean itemBlock;
+    private double unblockedDefense;
+    private boolean hasBlocked;
+
+    public Player(TSG tsg, Random random)
     {
+        this.random = random;
         items = new LinkedList<>();
         reset(tsg);
     }
 
     public void reset(TSG tsg)
     {
+        //Skills
+        dialogue = false;
+        itemBlock = false;
+
+        ////////
         health = 100;
         maximumHealth = health;
         damageBoost = 0;
@@ -51,13 +69,18 @@ public class Player
         strengthLevel = 0;
         luckLevel = 0;
         healthLevel = 0;
+        unblockedDefense = -1;
+        hasBlocked = false;
         statPoints = 0;
+        maximumMana = 100;
+        mana = maximumMana;
         items.clear();
         items.add(tsg.getItemByName("Ramen"));
         weapon = tsg.getWeaponByName("Normie Sword");
         obtainedItem = null;
         obtainedWeapon = null;
         inventorySize = 5;
+        floors = 1;
     }
 
     public void update(TSG tsg)
@@ -85,16 +108,46 @@ public class Player
         {//Checking xp to make sure player levels up
             levelUp(tsg);
         }
+
+        if(unblockedDefense>-1)
+        {
+            if(hasBlocked)
+            {
+                defenseBoost = unblockedDefense;
+                unblockedDefense = -1;
+            }else{
+                hasBlocked = true;
+            }
+        }
     }
 
+    public void dialogue(TSG tsg)
+    {
+        if(tsg.inCombat)
+        {
+            if(dialogue)
+            {
+                tsg.thot.dialogue(tsg);
+            }else{
+                tsg.appendMessage("You don't have enough intelligence to use dialogue!");
+            }
+        }else{
+            tsg.appendMessage("You can only use this in combat!");
+        }
+    }
 
     public void attack(TSG tsg)
     {
         {
             if (tsg.inCombat) {
                 if (weapon != null) {
-                    int d = weapon.getDamage() + damageBoost;
+                    int d = weapon.getDamage() + (int)(weapon.getDamage()*damageBoost);
                     if (tsg.thot != null) {
+                        if(random.nextInt(99)<(Math.sqrt(luckLevel*10)+5))
+                        {
+                            tsg.appendMessage("You got a critical hit!");
+                            d+=(d/2);
+                        }
                         tsg.thot.takeDamage(d);
                         tsg.appendMessage("You did " + d + " damage with " + weapon.getName());
                         weapon.use(tsg);
@@ -133,17 +186,21 @@ public class Player
         s+="\n";
         s+="Health: " + health + "/" + maximumHealth;
         s+="\n";
-        s+="Damage Boost: " + damageBoost;
+        s+="Mana: "+mana +"/" +maximumMana;
         s+="\n";
-        s+="Defense Boost: " + defenseBoost;
+        s+="Strength: " + strengthLevel;
+        s+="\n";
+        s+="Intelligence: " + intelligenceLevel;
+        s+="\n";
+        s+="Luck: " + luckLevel;
         return s;
     }
 
     //Stats Modifiers/////////////////////////////////////////
     public int takeDamage(TSG tsg, int damage)
     {
-        tsg.appendMessage("You took "+damage+" damage");
-        health-=(damage-defenseBoost);
+        tsg.appendMessage("You took "+(damage-defenseBoost)+" damage");
+        health-=(damage-((int)damage*defenseBoost));
         return health;
     }
 
@@ -159,6 +216,7 @@ public class Player
         tsg.appendMessage("LEVEL UP!");
 
         level++;
+        statPoints++;
         this.xp -= xpToLevel;
         xpToLevel+=50;
     }
@@ -170,53 +228,85 @@ public class Player
         return xp;
     }
 
-    public int raiseMaximumHealth(TSG tsg, int difference)
-    {
-        tsg.appendMessage("You will to live has risen "+difference);
-        maximumHealth+=difference;
-        return maximumHealth;
-    }
-
-    public int lowerMaximumHealth(TSG tsg, int difference)
-    {
-        tsg.appendMessage("Your will to live has dropped "+difference);
-        maximumHealth-=difference;
-        return maximumHealth;
-    }
-
-    public int raiseDefense(TSG tsg, int difference)
-    {
-        tsg.appendMessage("Your Defense has risen "+difference);
-        defenseBoost+=difference;
-        return defenseBoost;
-    }
-
-    public int lowerDefense(TSG tsg, int differnece)
-    {
-        tsg.appendMessage("Your defense has dropped "+differnece);
-        defenseBoost-=differnece;
-        return defenseBoost;
-    }
-
-    public int raiseDamage(TSG tsg, int difference)
-    {
-        tsg.appendMessage("Your damage has risen "+difference);
-        damageBoost+=difference;
-        return damageBoost;
-    }
-
-    public int dropDamage(TSG tsg, int difference)
-    {
-        tsg.appendMessage("Your damage has dropped "+difference);
-        damageBoost-=difference;
-        return damageBoost;
-    }
-
     public int raiseInventorySize(TSG tsg, int difference)
     {
         tsg.appendMessage("Your inventory size has increased "+difference+" slots");
         inventorySize+=difference;
         return inventorySize;
+    }
+
+    public void levelUpStrength(TSG tsg)
+    {
+        if(statPoints>0)
+        {
+            statPoints--;
+            strengthLevel++;
+            inventorySize = ((int) strengthLevel/10) + 5;
+            tsg.appendMessage("You leveled up your Strength!");
+        }else{
+            tsg.appendMessage("You don't have enough skill points for that!");
+        }
+
+        if(strengthLevel>=5)
+        {
+            if(!itemBlock)tsg.appendMessage("You have learned Item blocking");
+
+            itemBlock = true;
+        }
+    }
+
+    public void levelUpIntelligence(TSG tsg)
+    {
+        if(statPoints>0)
+        {
+            statPoints--;
+            intelligenceLevel++;
+            tsg.appendMessage("You leveled up your Intelligence");
+        }else{
+            tsg.appendMessage("You don't have enough skill points for that!");
+        }
+
+        if(intelligenceLevel>=5)
+        {
+            if(!dialogue)tsg.appendMessage("You have learned Dialogue!");
+
+            dialogue = true;
+        }
+    }
+
+    public void levelUpHealth(TSG tsg)
+    {
+        if(statPoints>0)
+        {
+            statPoints--;
+            maximumHealth = (int) Math.sqrt(healthLevel*100)+100;
+            health += (int) Math.sqrt(healthLevel*100);
+            tsg.appendMessage("You leveled up your Health!");
+        }else{
+            tsg.appendMessage("You don't have enough skill points for that!");
+        }
+    }
+
+    public void levelUpLuck(TSG tsg)
+    {
+        if(statPoints>0)
+        {
+            statPoints--;
+            luckLevel++;
+            tsg.appendMessage("You leveled up your Luck!");
+        }else{
+            tsg.appendMessage("You don't have enough skill points for that!");
+        }
+    }
+
+    public void addStatPoint()
+    {
+        statPoints++;
+    }
+
+    public void nextFloor()
+    {
+        floors++;
     }
     //Stats Modifiers/////////////////////////////////////////
 
@@ -262,6 +352,11 @@ public class Player
             }
         }else{
             tsg.appendMessage("This item slot is empty");
+        }
+        if(itemBlock) {
+            tsg.appendMessage("You have activated Item Block! Defense has risen to 25%!");
+            unblockedDefense = defenseBoost;
+            defenseBoost = .25;
         }
     }
 
@@ -310,16 +405,6 @@ public class Player
         return maximumHealth;
     }
 
-    public int getDamageBoost()
-    {
-        return damageBoost;
-    }
-
-    public int getDefenseBoost()
-    {
-        return defenseBoost;
-    }
-
     public int getXp()
     {
         return xp;
@@ -353,6 +438,11 @@ public class Player
     public int getInventorySize()
     {
         return inventorySize;
+    }
+
+    public int getFloors()
+    {
+        return floors;
     }
     //Getters////////////////////////////////////////////////
 }

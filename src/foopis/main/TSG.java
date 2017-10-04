@@ -71,6 +71,8 @@ public class TSG
         commandHandler.add(new CommandGo());
         commandHandler.add(new CommandRoomAction());
         commandHandler.add(new CommandLook());
+        commandHandler.add(new CommandLevelUp());
+        commandHandler.add(new CommandDialogue());
     }
 
     private void initItems()
@@ -104,7 +106,7 @@ public class TSG
 
     private void initGame()
     {
-        player = new Player(this);
+        player = new Player(this, random);
         inCombat = false;
         hasText = false;
         thot = null;
@@ -128,7 +130,7 @@ public class TSG
         if(canEncounter) {
             int sampleSize = 1000;
             if (random.nextInt(sampleSize - 1) <= (sampleSize * chance)) {
-                thot = new Thot(player.getLevel(), this);
+                thot = new Thot(player.getFloors(), this);
                 inCombat = true;
                 appendMessage("-----------------------------------------------Battle-------------------------------------------------");
                 appendMessage("You have been encountered by " + thot.getName());

@@ -12,12 +12,9 @@ public class ItemDankMeme extends Item
 
     public boolean use(TSG tsg)
     {
-        int healthDrop = 10;
-        int damageBoost = 20;
-
         tsg.appendMessage("You have consumed a dank meme");
-        tsg.player.raiseDamage(tsg,damageBoost);
-        tsg.player.lowerMaximumHealth(tsg,healthDrop);
+        tsg.appendMessage("You gained 1 stat point!");
+        tsg.player.addStatPoint();
         return true;
     }
 }

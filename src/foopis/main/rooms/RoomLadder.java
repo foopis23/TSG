@@ -14,6 +14,7 @@ public class RoomLadder extends Room
     public void action(TSG tsg)
     {
         tsg.appendMessage("You went down the ladder to the next floor");
+        tsg.player.nextFloor();
         tsg.dungeonHandler.createFloor(tsg);
     }
 }

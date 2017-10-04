@@ -9,6 +9,7 @@ public class Enemy
     protected String name;
     protected double hitChance;
     protected int xpDropped;
+    protected int level;
 
     public void action(TSG tsg)
     {
@@ -18,6 +19,11 @@ public class Enemy
     public void takeDamage(int damage)
     {
         health -= damage;
+    }
+
+    public void dialogue(TSG tsg, int level)
+    {
+        tsg.appendMessage("This Enemy does not want to talk!");
     }
 
     public void setHitChance(double i)

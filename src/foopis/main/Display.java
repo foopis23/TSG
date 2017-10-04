@@ -25,7 +25,7 @@ public class Display extends javax.swing.JPanel implements KeyListener {
     private LinkedList<Room> shownRooms;
     private Room currentRoom;
     private String TITLE = "TSG";
-    private static final String VERSION = "v3.2 Alpha";
+    private static final String VERSION = "v4.0 Alpha TEST";
 
     public Display(TSG tsg) {
         this.tsg = tsg;
@@ -127,6 +127,7 @@ public class Display extends javax.swing.JPanel implements KeyListener {
         statsArea.setColumns(20);
         statsArea.setRows(5);
         statScroll.setViewportView(statsArea);
+        statScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -201,6 +202,7 @@ public class Display extends javax.swing.JPanel implements KeyListener {
             if(tsg.running) {
                 getShownRooms();
 
+
                 int height = this.getHeight() - padding * 2;
                 int width = this.getWidth() - padding * 2;
                 int maxX = 0;
@@ -258,6 +260,8 @@ public class Display extends javax.swing.JPanel implements KeyListener {
                         g.fillRect(roomX + roomSize * 7 / 16, roomY + roomSize * 7 / 16, roomSize / 8 + 1, roomSize / 8 + 1);
                     }
                 }
+                g.setColor(Color.WHITE);
+                g.drawString(Integer.toString(tsg.player.getFloors()),1,this.getHeight()-1);
             }
         }
     }

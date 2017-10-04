@@ -21,10 +21,11 @@ public class WeaponCarbine extends Weapon
             tsg.appendMessage("You don't spawn peek the "+tsg.thot.getName());
         }
         uses--;
-        if(uses<=0)
+        if(uses==0)
         {
             tsg.appendMessage("Your weapon has had its Acog removed and is no longer useful, Thanks Ubisoft");
             this.damage=8;
+            uses--;
         }
         return true;
     }

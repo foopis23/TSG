@@ -13,30 +13,11 @@ public class Thot extends Enemy
     {
         generator = tsg.random;
         hitChance = 1;
-        int i = generator.nextInt(5);
-
-        if(i==0)
-        {
-            name = "Normie Thot";
-            health = generator.nextInt(level*2+20)+10;
-            damage = generator.nextInt(level/2+8)+1;
-        }else if(i==1)
-        {
-            name = "Stronk Thot";
-            health = generator.nextInt(level*2+30)+10;
-            damage = generator.nextInt(level/2+4)+1;
-        }else if(i==2)
-        {
-            name = "Shrewd Thot";
-            health = generator.nextInt(level*2+10)+10;
-            damage = generator.nextInt(level/2+12)+1;
-        }else{
-            name = "Normie Thot";
-            health = generator.nextInt(level*2+20)+10;
-            damage = generator.nextInt(level/2+8)+1;
-        }
-
-        xpDropped = health+damage/2;
+        name = "Normie Thot";
+        level = generator.nextInt(level+10)+generator.nextInt(level)/2;
+        health = generator.nextInt(2^level+20)+10;
+        damage = generator.nextInt(2^level+8)+1;
+        xpDropped = health + damage /2;
     }
 
     public void action(TSG tsg)
@@ -60,6 +41,28 @@ public class Thot extends Enemy
             }
         }else{
             tsg.thotDefeated(xpDropped);
+        }
+    }
+
+    public void dialogue(TSG tsg)
+    {
+        int difference = tsg.player.getLevel()-level;
+
+        if(difference<=0)
+        {
+            tsg.appendMessage("She is way out of your league and you can't even find a way to open a conversation");
+            return;
+        }
+
+        int chance = difference*10;
+        tsg.appendMessage("[You]: Stop being a thot!");
+
+        if(chance<generator.nextInt(99))
+        {
+            tsg.appendMessage("[Thot]: You might be right... I need to go reconsider my life choices..");
+            tsg.thotDefeated(xpDropped/2);
+        }else{
+            tsg.appendMessage("[Thot]: You think you can tell me how to live my life! You are just jealous because you aren't me!");
         }
     }
 }

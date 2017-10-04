@@ -8,12 +8,12 @@ public class CommandRoomAction extends Command {
 
     public CommandRoomAction()
     {
-        command="RoomAction";
+        command="Action";
         isAttackMove = false;
     }
 
     public boolean run(String command, LinkedList<String> args, TSG tsg) {
-        if (isThisCommand(command))
+        if (isThisCommand(command)||isThisCommand("loot")||isThisCommand("search")||isThisCommand("climb"))
         {
             if(!tsg.inCombat) {
                 tsg.dungeonHandler.getCurrentRoom().action(tsg);
