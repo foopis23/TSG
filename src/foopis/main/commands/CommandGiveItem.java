@@ -10,7 +10,7 @@ public class CommandGiveItem extends Command
 
     public CommandGiveItem()
     {
-        command ="Give";
+        command ="give";
         isAttackMove = false;
     }
 
@@ -18,9 +18,9 @@ public class CommandGiveItem extends Command
 
         if(isThisCommand(command))
         {
-            if(args.size()>1) {
-                if(args.get(0).toLowerCase().equals("item")||args.get(0).toLowerCase().equals("i")) {
-                    String itemName = args.get(0);
+            if(args.size()>0) {
+                if(args.get(0).toLowerCase().trim().equals("item")||args.get(0).toLowerCase().trim().equals("i")) {
+                    String itemName = args.get(1);
                     Item item = tsg.getItemByName(itemName);
                     if (item != null) {
                         tsg.player.obtainItem(item, tsg);

@@ -41,8 +41,7 @@ public class Player
     //Skills
     private boolean dialogue;
     private boolean itemBlock;
-    private double unblockedDefense;
-    private boolean hasBlocked;
+    private double blockDefense;
 
     public Player(TSG tsg, Random random)
     {
@@ -69,9 +68,8 @@ public class Player
         strengthLevel = 0;
         luckLevel = 0;
         healthLevel = 0;
-        unblockedDefense = -1;
-        hasBlocked = false;
-        statPoints = 0;
+        blockDefense = -1;
+        statPoints = 5;
         maximumMana = 100;
         mana = maximumMana;
         items.clear();
@@ -107,17 +105,6 @@ public class Player
         if(xp>=xpToLevel)
         {//Checking xp to make sure player levels up
             levelUp(tsg);
-        }
-
-        if(unblockedDefense>-1)
-        {
-            if(hasBlocked)
-            {
-                defenseBoost = unblockedDefense;
-                unblockedDefense = -1;
-            }else{
-                hasBlocked = true;
-            }
         }
     }
 
@@ -199,8 +186,15 @@ public class Player
     //Stats Modifiers/////////////////////////////////////////
     public int takeDamage(TSG tsg, int damage)
     {
-        tsg.appendMessage("You took "+(damage-defenseBoost)+" damage");
-        health-=(damage-((int)damage*defenseBoost));
+        if(blockDefense>-1)
+        {
+            tsg.appendMessage("You took "+(damage-(damage*(defenseBoost + blockDefense)))+" damage");
+            health-=(damage-((int)damage*(defenseBoost+blockDefense)));
+            blockDefense= -1;
+        }else{
+            tsg.appendMessage("You took "+(damage-(damage*(defenseBoost)))+" damage");
+            health-=(damage-((int)damage*defenseBoost));
+        }
         return health;
     }
 
@@ -213,7 +207,7 @@ public class Player
 
     public void levelUp(TSG tsg)
     {
-        tsg.appendMessage("LEVEL UP!");
+        tsg.appendMessage("LEVEL UP! You've gained 1 stat point!");
 
         level++;
         statPoints++;
@@ -355,8 +349,7 @@ public class Player
         }
         if(itemBlock) {
             tsg.appendMessage("You have activated Item Block! Defense has risen to 25%!");
-            unblockedDefense = defenseBoost;
-            defenseBoost = .25;
+            blockDefense = .25;
         }
     }
 
